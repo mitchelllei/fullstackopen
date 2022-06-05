@@ -1,0 +1,14 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP Status Code 201, Request successful, spa.js
+note over browser:
+Post request contains content and date and timestamp as JSON data
+Content type request tells the server that the data is in JSON format
+end note
+
+browser->server: HTTP POST  https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over browser:
+e.preventDefault() overrides default behavior
+data as json string file note is rerendered on page and sent to server
+end note
+
+
