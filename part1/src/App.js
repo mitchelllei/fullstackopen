@@ -221,7 +221,7 @@ const App = (props) => {
 //parts[0].name
 //1.5
 
-<Total total={parts.exercises[0]+parts.exercises[1]+parts.exercises[2]} />
+/* <Total total={parts.exercises[0]+parts.exercises[1]+parts.exercises[2]} />
 const Header = (props) => {
   return <h1>{props.course}</h1>
 }
@@ -234,11 +234,55 @@ const Content = (props) => {
       ))}
     </div>
   )
+} */
+
+// const ContentRefactored = (props) => {
+//   return (
+//     <div>
+//       <p>
+//       {props.parts.map((part,index)=>{
+//         return(
+//           <Part part={part.part} number={part.exercise} key={index}/>
+//         )
+//       })
+//       }
+//       </p>
+//     </div>
+//   )
+// }
+// const Content = (props) => {
+//   props.posts.map((post) => {
+
+//     return(
+//       <p>{post.name}</p>
+//     ) 
+//   }
+//   );
+// }
+
+// const Test = (props) => {
+//   return <p>{props.partlist}</p>
+// }
+//1.5
+const Header = (props) => {
+  return <p>{props.course.name}</p>
+}
+
+const Content= (props) => {
+  return (
+   <div>
+    {props.course.parts.map( part => <p>{part.name}</p>)}
+   </div>
+  )
 }
 
 const Total = (props) => {
-  return <h1>{props.total}</h1>
-}
+  return (
+    <div>
+     {props.course.parts.map( part => <p>{part.exercises[0]}</p>)}
+    </div>
+   )
+ }
 
 const App = () => {
   const course = {
@@ -260,7 +304,10 @@ const App = () => {
   }
   return (
     <div>
-    {course.parts[0].exercises}
+      <Header course={course} />
+      <Content course={course} />
+      <Total course={course} />
+    
     </div>
   )
 }
