@@ -28,6 +28,9 @@ const App = () => {
 export default App
 */
 
+import { valueToNode } from "@babel/types"
+import { useDebugValue } from "react"
+
 // const Header = (props) => {
 //   return (
 //     <div>
@@ -110,46 +113,134 @@ const App = (props) => {
     //</>
  // )
 //*/}
+//1.3
+// const Header = (props) => {
+//   console.log(props)
+//   return <h1>{props.course}</h1>
+// }
+
+// const Content = (props) => {
+//   console.log(props)
+//   return <h1>{props.name},{props.exercises}</h1>
+// }
+
+// const Total = (props) => {
+//   console.log(props)
+//   return <h1>{props.total}</h1>
+// }
+// const App = () => {
+//   const course = 'Half Stack application development'
+//   const part1 = {
+//     name: 'Fundamentals of React',
+//     exercises: 10
+//   }
+//   const part2 = {
+//     name: 'Using props to pass data',
+//     exercises: 7
+//   }
+//   const part3 = {
+//     name: 'State of a component',
+//     exercises: 14
+//   }
+
+//   return (
+//     <div>
+//        <Header course={course}/>
+//       {/*Content renders parts and number of exercises*/}
+//       <Content name={part1.name} exercises={part1.exercises} />
+//       <Content name={part2.name} exercises={part2.exercises} />
+//       <Content name={part3.name} exercises={part3.exercises} />
+//       <Total total={part1.exercises+part2.exercises+part3.exercises}/>
+//     </div>
+//   )
+// }
+
+
+//const ContentRefactored = (props) => {
+  //   return (
+  //     <div>
+  //       <p>
+  //       {props.parts.map((part,index)=>{
+  //         return(
+  //           <Part part={part.part} number={part.exercise} key={index}/>
+  
+  //<ContentRefactored parts={parts} />
+ 
+  // const parts = [{ part: 'Fundamentals of React', exercise: 10 }, { part: 'Using props to pass data', exercise: 7 }, { part: 'State of a component', exercise: 14 }]
+//1.4
 
 const Header = (props) => {
-  console.log(props)
   return <h1>{props.course}</h1>
 }
 
-const Content = (props) => {
-  console.log(props)
-  return <h1>{props.name},{props.exercises}</h1>
+const Content= (props) => {
+  return (
+   <div>
+    {props.parts.map(({name, exercises}) => (
+        <p>key={name} {exercises}</p>
+      ))}
+   </div>
+  )
 }
 
-const Total = (props) => {
-  console.log(props)
-  return <h1>{props.total}</h1>
-}
+// const ContentRefactored = (props) => {
+//   return (
+//     <div>
+//       <p>
+//       {props.parts.map((part,index)=>{
+//         return(
+//           <Part part={part.part} number={part.exercise} key={index}/>
+//         )
+//       })
+//       }
+//       </p>
+//     </div>
+//   )
+// }
+// const Content = (props) => {
+//   props.posts.map((post) => {
+
+//     return(
+//       <p>{post.name}</p>
+//     ) 
+//   }
+//   );
+// }
+
+// const Test = (props) => {
+//   return <p>{props.partlist}</p>
+// }
+
+
+
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
-  }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
-  }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
-  }
-
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
+  const partlist =  parts.map(post => {
+      return(
+      <p>{post.name}</p>
+      )
+});
   return (
     <div>
-       <Header course={course}/>
-      {/*Content renders parts and number of exercises*/}
-      <Content name={part1.name} exercises={part1.exercises} />
-      <Content name={part2.name} exercises={part2.exercises} />
-      <Content name={part3.name} exercises={part3.exercises} />
-      <Total total={part1.exercises+part2.exercises+part3.exercises}/>
+      <Header course={course} />
+      <Content parts={parts} />
+    
     </div>
   )
 }
-export default App
 
+export default App
