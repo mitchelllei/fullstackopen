@@ -12,6 +12,7 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad,setBad] = useState(0)
+  const total = good + neutral + bad
   const setToValue = newValue => {
     console.log('value now', newValue)
     setValue(newValue)
@@ -20,6 +21,7 @@ const App = () => {
   const setToGood = newGood => {
     console.log('newGood', newGood)
     setGood(newGood)
+    
   }
 
   const setToNeutral = newNeutral => {
@@ -34,12 +36,17 @@ const App = () => {
 
   return (
     <div>
+    <div>
       <h><b>Statistics</b></h>
       <Display value={good} quality="good" />
       <Display value={neutral} quality="neutral"  />
       <Display value={bad} quality="bad" />
+      total {total} <br></br>
+      positive {good/total}<br></br>
+      average {(good-bad)/(total)}
+      </div>
       <h><b>Feedback</b></h>
-  
+      
       <div>
       <Button handleClick={() => setToGood(good + 1)} text="good" />
       <Button handleClick={() => setToNeutral(neutral + 1)} text="neutral" />
