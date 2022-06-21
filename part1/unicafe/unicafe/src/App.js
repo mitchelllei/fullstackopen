@@ -7,16 +7,26 @@ const Button = (props) => (
   </button>
 )
 
-const Statistics = ({total, good, bad}) => (
+const Statistics = ({total, good, bad}) => {
+  if(total === 0){
+    return(
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+  return(
+
   <div>
     total {total} <br></br>
     positive {good/total}<br></br>
     average {(good-bad)/(total)}
   </div>  
-
-)
+  )
+}
 
 const App = () => {
+  
   const [value, setValue] = useState(10)
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -42,16 +52,18 @@ const App = () => {
     console.log('newBad', newBad)
     setBad(newBad)
   }
-
+  
   return (
     <div>
-    <div>
-      <h><b>Statistics</b></h>
+    <div>   
+      <h><b>Statistics</b></h> 
+ 
+      
+    
       <Display value={good} quality="good" />
-      <Display value={neutral} quality="neutral"  />
+      <Display value={neutral} quality="neutral" />
       <Display value={bad} quality="bad" />
       <Statistics total={total} good={good} bad={bad}/>
-      
       </div>
       <h><b>Feedback</b></h>
       
