@@ -277,13 +277,9 @@ const Content= (props) => {
 }
 
 const Total = (props) => {
-  return (
-    <div>
-     {props.course.parts.map( part => <p>{part.exercises[0]}</p>)}
-    </div>
-   )
- }
-
+  return <p>Total {props.total}</p>
+  
+}
 const App = () => {
   const course = {
     name: 'Half Stack application development',
@@ -302,11 +298,18 @@ const App = () => {
       }
     ]
   }
+  //Referenced this site https://dev.to/yogesnsamy/how-to-use-the-reduce-method-in-javascript-and-react-5dhl
+  //Which seems to have an identical example for the total function
+  const total = course.parts.reduce(
+    (prev,cur) => prev + cur.exercises,0
+  );
+    
+
   return (
     <div>
       <Header course={course} />
       <Content course={course} />
-      <Total course={course} />
+      <Total total={total} />
     
     </div>
   )
