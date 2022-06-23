@@ -16,7 +16,7 @@ const StatisticLine = ({good,bad,total}) => {
 }
 
 
-const Statistics = ({total, good, bad}) => {
+const Statistics = ({total, good, bad, neutral}) => {
  
   if(total === 0){
     return(
@@ -29,10 +29,34 @@ const Statistics = ({total, good, bad}) => {
   return(
 
   <div>
-
-    total {total} <br></br>
-    positive {good/total}<br></br>
-    average {(good-bad)/(total)}
+  <table>
+    <tbody>
+      <tr>
+        <td>good</td>
+        <td> {good}</td>
+      </tr>
+      <tr>
+        <td>bad</td>
+        <td>{bad}</td>
+      </tr>
+      <tr>
+        <td>neutral</td>
+        <td>{neutral}</td>
+      </tr>
+      <tr>
+        <td>total</td>
+        <td>{total}</td>
+      </tr>
+      <tr>
+        <td>positive</td>
+        <td>{good/total}</td>
+      </tr>
+        <tr>
+        <td>average</td>
+        <td>{(good-bad)/(total)}</td>
+      </tr>
+     </tbody>
+    </table>
   </div>  
   )
 }
@@ -67,21 +91,20 @@ const App = () => {
   
   return (
     <div>
-    <div>   
-      <h><b>Statistics</b></h> 
- 
-      
-    
-      <Display value={good} quality="good" />
-      <Display value={neutral} quality="neutral" />
-      <Display value={bad} quality="bad" />
-      <Statistics a = {a} total={total} good={good} bad={bad}/>
+    <div>  
+      <h1><b>Feedback</b></h1>
+      <div>
+
+      </div>
       <Button quality = {() => setToGood(good + 1)} text = "good" /> 
       <Button quality = {() => setToNeutral(neutral + 1)} text = "neutral" /> 
       <Button quality = {() => setToBad(bad + 1)} text = "bad" /> 
+      <div>  
+      <h1><b>Statistics</b></h1> 
+      <Statistics a = {a} total={total} good={good} bad={bad} neutral = {neutral}/>
       </div>
-      <h><b>Feedback</b></h>
       
+      </div>
       <div>
      
       
@@ -91,5 +114,3 @@ const App = () => {
 }
 
 export default App
-{/* <Button handleClick={() => setToNeutral(neutral + 1)} text="neutral" />
-      <Button handleClick={() => setToBad(bad + 1)} text="bad" /> */}
