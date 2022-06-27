@@ -7,13 +7,13 @@ const Button = ({quality,text}) => (
   </button>
 )
 
-const StatisticLine = ({good,bad,total}) => {
-  return(
-    <div>
-    <p> average {(good-bad)/(total)} </p>
-    </div>
-)
-}
+  const StatisticLine = (props) => (
+    <tr>
+      <td>{props.text} {props.value}</td> 
+    </tr>
+
+    
+  )
 
 
 const Statistics = ({total, good, bad, neutral}) => {
@@ -31,30 +31,12 @@ const Statistics = ({total, good, bad, neutral}) => {
   <div>
   <table>
     <tbody>
-      <tr>
-        <td>good</td>
-        <td> {good}</td>
-      </tr>
-      <tr>
-        <td>bad</td>
-        <td>{bad}</td>
-      </tr>
-      <tr>
-        <td>neutral</td>
-        <td>{neutral}</td>
-      </tr>
-      <tr>
-        <td>total</td>
-        <td>{total}</td>
-      </tr>
-      <tr>
-        <td>positive</td>
-        <td>{good/total}</td>
-      </tr>
-        <tr>
-        <td>average</td>
-        <td>{(good-bad)/(total)}</td>
-      </tr>
+    <StatisticLine text="good" value={good} />
+    <StatisticLine text="bad" value={bad} />
+    <StatisticLine text="neutral" value={neutral} />
+    <StatisticLine text="total" value={total} />
+    <StatisticLine text="positive" value={good/total} />
+    <StatisticLine text="average" value={(good-bad)/(total)}/>
      </tbody>
     </table>
   </div>  
@@ -62,7 +44,6 @@ const Statistics = ({total, good, bad, neutral}) => {
 }
 
 const App = () => {
-  const a = "SDDFFF"
   const [value, setValue] = useState(10)
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -101,7 +82,7 @@ const App = () => {
       <Button quality = {() => setToBad(bad + 1)} text = "bad" /> 
       <div>  
       <h1><b>Statistics</b></h1> 
-      <Statistics a = {a} total={total} good={good} bad={bad} neutral = {neutral}/>
+      <Statistics total={total} good={good} bad={bad} neutral = {neutral}/>
       </div>
       
       </div>
