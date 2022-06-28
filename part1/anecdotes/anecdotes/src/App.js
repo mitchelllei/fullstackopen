@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useEffect, useState } from 'react'
 
 const Button = ({quality,text}) => (
   <button onClick={quality}>
@@ -9,8 +9,11 @@ const Button = ({quality,text}) => (
 
 const MakeAnecdote = (props) =>
 {
-  console.log(props.textToWrite);
-  <p>{props.textToWrite}</p>
+  <div>
+    console.log(props.textToWrite);
+    <p>{props.textToWrite}</p>
+  </div>
+
 }
 //<Button quality = {() => setToSelected(good + 1)} text = "new quote" /> 
 //{anecdotes[selected]}
@@ -28,22 +31,33 @@ const App = () => {
   const len = anecdotes.length
  
   const [selected, setSelected] = useState(Math.floor(Math.random() * len))
-  const textToWrite = anecdotes[selected]
+  const [voteList, newVoteList] = useState(Array(len).fill(0))
+  
+  const textToWrite = anecdotes[selected] 
+
+  const setVoteArray = () => {
+    let copyArray = [...voteList]
+    copyArray[selected]++
+    newVoteList(copyArray)
+  }
+
   const makeRandomNum = () => {
     setSelected(Math.floor(Math.random() * len))
     
   }
-  console.log(selected)
-    
+  
+  console.log(newVoteList)
   
   return (
 
     <div>
       <Button quality={makeRandomNum} text="New Anecdote" />
+      <Button quality={setVoteArray} text="new Vote" />
       <MakeAnecdote textToWrite={textToWrite}/>
+      <p>Anecdote: "{anecdotes[selected]}"</p>
+      <p>vote {voteList[selected]}</p>
     </div>
   )
-  console.log(textToWrite)
 }
 
 export default App
