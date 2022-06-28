@@ -1,4 +1,4 @@
-import {useEffect, useState } from 'react'
+import {useState } from 'react'
 
 const Button = ({quality,text}) => (
   <button onClick={quality}>
@@ -31,7 +31,7 @@ const App = () => {
   const len = anecdotes.length
  
   const [selected, setSelected] = useState(Math.floor(Math.random() * len))
-  const [voteList, newVoteList] = useState(Array(len).fill(0))
+  const [voteList, newVoteList] = useState(Array(len).fill(0)) //Because it needs to update the array each time the state changes
   
   const textToWrite = anecdotes[selected] 
 
@@ -45,8 +45,15 @@ const App = () => {
     setSelected(Math.floor(Math.random() * len))
     
   }
-  
+  let hasVoted = false
+  if (Math.max(...voteList) >0)
+  {
+    hasVoted = true
+  }
+    
+
   console.log(newVoteList)
+  let i = voteList.indexOf(Math.max(...voteList));
   
   return (
 
@@ -56,6 +63,10 @@ const App = () => {
       <MakeAnecdote textToWrite={textToWrite}/>
       <p>Anecdote: "{anecdotes[selected]}"</p>
       <p>vote {voteList[selected]}</p>
+      
+      {
+        <p>{hasVoted ? `Anecdote ${anecdotes[i]} has the highest vote with ${voteList[i]}` : 'No votes yet'}</p>
+      }
     </div>
   )
 }
