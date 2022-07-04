@@ -20,10 +20,11 @@ const App = () => {
         exercises: 14,
         id: 3
       }
+      
     ]
   }
-  const course1 = "aaaaA"
-  return <Course course={course} />
+  const total = course.parts.reduce((total, current) => total = total + current.exercises,0);
+  return <Course course={course} total={total} />
 }
 
 export default App

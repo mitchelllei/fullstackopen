@@ -1,15 +1,16 @@
 import React from 'react'
 
-const Course = ({ course }) => {
+const Course = ({ course, total }) => {
     return (
         <>
         <h1>{course.name}</h1>
         <ul>
         {course.parts.map(course1 => 
           <li key={course1.id}>
-            {course1.name} {course1.exercises}
+            {course1.name} {course1.exercisese}
           </li>
         )}
+        Total is {total}
       </ul>
     
         </>
