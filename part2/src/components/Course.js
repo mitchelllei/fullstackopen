@@ -1,43 +1,13 @@
 import React from 'react'
 
-const Course = ({ course, total }) => {
+const Course = ({ courses }) => {
     return (
         <>
-        <h1>{course.name}</h1>
-        <ul>
-        {course.parts.map(course1 => 
-          <li key={course1.id}>
-            {course1.name} {course1.exercisese}
-          </li>
-        )}
-        Total is {total}
-      </ul>
-    
+        <h1>Web Development Curriculum</h1>
+        {courses.flatMap(course => course.parts.map(part => {return (<p key={`${course.id}-${part.id}`}>{part.exercises}</p>)}))},
+        {courses.flatMap(course => <p>{course.name}</p>)}
         </>
     )
 }
-const Course1 = ({ course1 }) => <h1>{course1}</h1>
-
-const Header = ({ course }) => <h1>{course}</h1>
-
-const Total = ({ sum }) => <p>Number of exercises {sum}</p>
-
-const Part = ({ part }) =>
-    <p>
-        {part.name} {part.exercises}
-    </p>
-
-const Content = ({ parts }) =>
-    <>
-        <Part
-            part={parts[0]}
-        />
-        <Part
-            part={parts[1]}
-        />
-        <Part
-            part={parts[2]}
-        />
-    </>
 
 export default Course
