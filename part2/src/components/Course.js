@@ -3,11 +3,19 @@ import React from 'react'
 const Course = ({ courses }) => {
     return (
         <>
-        <h1>Web Development Curriculum</h1>
-        {courses.flatMap(course => course.parts.map(part => {return (<p key={`${course.id}-${part.id}`}>{part.exercises}</p>)}))},
-        {courses.flatMap(course => <p>{course.name}</p>)}
+       {courses.map(({ name, id, parts }) => (
+        <React.Fragment key={id}>
+    <p>Name: {name}</p>
+    <ul>
+      {parts.map((part) => (
+        <li key={part.id}>{part.name}</li> 
+      ))}
+    </ul>
+  </React.Fragment>
+))}
         </>
     )
 }
+
 
 export default Course
