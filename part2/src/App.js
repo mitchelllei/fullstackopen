@@ -47,7 +47,6 @@ const App = () => {
     }
   ]
 
-  //const total = course.parts.reduce((total, current) => total = total + current.exercises,0);
   return <Course courses={courses} />
 }
 
