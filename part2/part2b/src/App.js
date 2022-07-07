@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'John' }
+    { name: 'John', id: 1 }
   ]) 
   const [newName, setNewName] = useState('')
 
@@ -13,12 +13,18 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     const nameObject = {
-      content: newName,
+      name: newName,
       id: persons.length + 1,
     }
-  
-    setPersons(persons.concat(nameObject))
-    setNewName('')
+   const inPhonebook = persons.some(item => item.name === newName) // true
+    if (inPhonebook === false) {
+      console.log('name not in phonebook')
+      setPersons(persons.concat(nameObject))
+      setNewName('')
+    } else {
+      alert(`${newName} is already in phonebook`)
+    }
+    
   }
 
   return (
@@ -37,8 +43,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {persons.map((p)=>(
-      <p key = {p.id}> {p.content}</p>
+      <p key = {p.name}> {p.name}</p>
       ))}
+      <div>debug: {persons.id}</div>
       <div>debug: <pre>{JSON.stringify(persons, null, 2)}</pre></div>
     </div>
     
