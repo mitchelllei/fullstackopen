@@ -2,10 +2,15 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'John', number: "123", id: 1 }
-  ]) 
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [searchValue, setSearchValue] = useState("")
+
  
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -56,10 +61,36 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
+
+
       <h2>Numbers</h2>
       {persons.map((p)=>(
       <p key = {p.name}> {p.name}</p>
       ))}
+      <div>
+        <input
+          type = "text"
+          name = "search"
+          value = {searchValue}
+          onChange={e => setSearchValue(e.target.value)}
+        />
+        <ul>
+          {persons.filter(person=> person.name.match(new RegExp(searchValue, "i")))
+          .map(filteredPerson => {
+            return <li key={filteredPerson.name}>{filteredPerson.name} {filteredPerson.number}</li>
+          })
+          }
+        </ul>
+        <div>
+          <ul>
+          {persons.filter(person=> person.number.match(new RegExp(searchValue, "i")))
+          .map(filteredPerson => {
+            return <li key={filteredPerson.number}>{filteredPerson.number} {filteredPerson.name}</li>
+          })
+          }
+          </ul>
+        </div>
+      </div>
       <div>debug: {persons.id}</div>
       <div>debug: <pre>{JSON.stringify(persons, null, 2)}</pre></div>
     </div>
