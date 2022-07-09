@@ -64,9 +64,11 @@ const App = () => {
 
 
       <h2>Numbers</h2>
-      {persons.map((p)=>(
-      <p key = {p.name}> {p.name}</p>
-      ))}
+      {persons.filter(person=> person.name.match(new RegExp(searchValue, "i")))
+          .map(filteredPerson => {
+            return <li key={filteredPerson.name}>{filteredPerson.name} {filteredPerson.number}</li>
+          })
+          }
       <div>
         <input
           type = "text"
@@ -74,25 +76,9 @@ const App = () => {
           value = {searchValue}
           onChange={e => setSearchValue(e.target.value)}
         />
-        <ul>
-          {persons.filter(person=> person.name.match(new RegExp(searchValue, "i")))
-          .map(filteredPerson => {
-            return <li key={filteredPerson.name}>{filteredPerson.name} {filteredPerson.number}</li>
-          })
-          }
-        </ul>
-        <div>
-          <ul>
-          {persons.filter(person=> person.number.match(new RegExp(searchValue, "i")))
-          .map(filteredPerson => {
-            return <li key={filteredPerson.number}>{filteredPerson.number} {filteredPerson.name}</li>
-          })
-          }
-          </ul>
-        </div>
       </div>
-      <div>debug: {persons.id}</div>
-      <div>debug: <pre>{JSON.stringify(persons, null, 2)}</pre></div>
+      {/* <div>debug: {persons.id}</div>
+      <div>debug: <pre>{JSON.stringify(persons, null, 2)}</pre></div> */}
     </div>
     
   )
