@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import Search from './components/Search'
+import Add from './components/Add'
+import Form from './components/form'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -29,7 +32,7 @@ const App = () => {
       id: persons.length + 1,
     }
    const inPhonebook = persons.some(item => item.name === newName) // true
-   const inPhonebookNumber = persons.some(item => item.nnumber === newNumber)
+   const inPhonebookNumber = persons.some(item => item.number === newNumber)
     if (inPhonebook === false & inPhonebookNumber === false) {
       console.log('name not in phonebook')
       setPersons(persons.concat(nameObject))
@@ -44,38 +47,15 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input 
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input
-          value = {newNumber}
-          onChange={handleNumberChange}
-           />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Add addName={addName} newName={newName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
 
 
       <h2>Numbers</h2>
-      {persons.filter(person=> person.name.match(new RegExp(searchValue, "i")))
-          .map(filteredPerson => {
-            return <li key={filteredPerson.name}>{filteredPerson.name} {filteredPerson.number}</li>
-          })
-          }
+
+      <Search persons= {persons} searchValue={searchValue} />
+    
       <div>
-        <input
-          type = "text"
-          name = "search"
-          value = {searchValue}
-          onChange={e => setSearchValue(e.target.value)}
-        />
+      <Form searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
       {/* <div>debug: {persons.id}</div>
       <div>debug: <pre>{JSON.stringify(persons, null, 2)}</pre></div> */}
