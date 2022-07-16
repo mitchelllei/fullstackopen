@@ -14,19 +14,18 @@ const Search = ({ countries, searchValue }) => {
 
   const listedCountriesData = countriesFiltered.map((countries) => (
     <React.Fragment key={countries.name.common}>
-      <li> {countries.name.common}</li>
+       <li> {countries.name.common}</li>
       <li> capital {countries.capital}</li>
       <li> area {countries.area}</li>
       <img src={countries.flags.png} alt="Flag" />
-      
-      <li>
-        {
-         
-          countries.languages.map(({language,index}) => (
-          <React.Fragment key={index}>
-            <li>{language}</li>
-          </React.Fragment>
-        ))}
+        <li>
+        {countries.languages && Object.values(countries.languages).filter(d=> d !== "" && d !== null).map((language) => 
+          <React.Fragment key={language}>
+          <p>{language}</p>
+
+        </React.Fragment>
+       )
+       }
       </li>
     </React.Fragment>
   ));

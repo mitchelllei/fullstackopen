@@ -11,14 +11,13 @@ const App = () => {
 
 
   useEffect(() => {
-    console.log('effect')
+    
     axios.get('https://restcountries.com/v3.1/all')
       .then(response => {
         setCountry(response.data)
       })
   }, [])
-  console.log('render', countries)
-  console.log("aaa", countries[0])
+  
   
   return(
     <div>
