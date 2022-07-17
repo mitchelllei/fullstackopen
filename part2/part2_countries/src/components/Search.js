@@ -1,52 +1,33 @@
 import React from "react";
 import axios from "axios";
+import SingleCountryData from './SingleCountryData'
+import Button from "./Button"
 
-const Search = ({ countries, searchValue }) => {
+const Search = ({ countries, searchValue}) => {
   const countriesFiltered = countries.filter((country) =>
     country.name.common.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const listedCountries = countriesFiltered.map((countries) => (
+  const listedCountries = countriesFiltered.filter((d) => d !== "" && d !== null).map((countries) => (
     <React.Fragment key={countries.name.common}>
       <li> {countries.name.common} </li>
     </React.Fragment>
   ));
 
-  const listedCountriesData = countriesFiltered.map((countries) => (
-    <React.Fragment key={countries.name.common}>
-       <li> {countries.name.common}</li>
-      <li> capital {countries.capital}</li>
-      <li> area {countries.area}</li>
-      <img src={countries.flags.png} alt="Flag" />
-        <li>
-        {countries.languages && Object.values(countries.languages).filter(d=> d !== "" && d !== null).map((language) => 
-          <React.Fragment key={language}>
-          <p>{language}</p>
 
-        </React.Fragment>
-       )
-       }
-      </li>
-    </React.Fragment>
-  ));
+
       
 if (searchValue === "") {
   return <ul>{listedCountries}</ul>;
-}
-if (listedCountries.length > 10) {
-  return (
-    <>
-      <p>Too many matches, make entry more specific</p>
-      <ul>{listedCountries}</ul>
-    </>
-  );
 }
 
 if (listedCountries.length === 1) {
   return (
     <>
       <p>Here is the data for </p>
-      <ul>{listedCountriesData}</ul>
+      <div>
+      <SingleCountryData countriesFiltered = {countriesFiltered} countries={countries} /> 
+       </div>
     </>
   );
 }

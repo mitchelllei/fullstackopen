@@ -3,11 +3,13 @@ import axios from 'axios'
 import Search from './components/Search'
 import Form from './components/Form'
 import Print from './components/Print'
+import SingleCountryData from './components/SingleCountryData'
 
 
 const App = () => {
   const [countries, setCountry] = useState([])
   const [searchValue, setSearchValue] = useState("")
+ 
 
 
   useEffect(() => {
