@@ -8,8 +8,9 @@ const Search = ({ countries, searchValue}) => {
     country.name.common.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const listedCountries = countriesFiltered.filter((d) => d !== "" && d !== null).map((countries) => (
-    <React.Fragment key={countries.name.common}>
+  const listedCountries = countriesFiltered.map((countries,index) => (
+    <React.Fragment key={index}>
+    
       <li> {countries.name.common} </li>
     </React.Fragment>
   ));
@@ -19,6 +20,18 @@ const Search = ({ countries, searchValue}) => {
       
 if (searchValue === "") {
   return <ul>{listedCountries}</ul>;
+}
+if (listedCountries.length > 10) {
+  return (
+    <>
+      <p>Too many matches, make entry more specific</p>
+      <ul>{countriesFiltered.map((country,index) => <SingleCountryData key = {index} countriesFiltered1 = {country}/>) }
+
+
+      </ul>
+     
+    </>
+  );
 }
 
 if (listedCountries.length === 1) {
@@ -32,6 +45,6 @@ if (listedCountries.length === 1) {
   );
 }
 
-return <div></div>;
+return <div>sdg</div>;
 }
 export default Search;

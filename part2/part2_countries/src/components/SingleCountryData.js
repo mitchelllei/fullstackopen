@@ -1,20 +1,22 @@
 import React,{ useState} from 'react'
 import Button from "./Button";
 
-const SingleCountryData = ({ countriesFiltered}) => {
+const SingleCountryData = ({index,  countriesFiltered1}) => {
   const [showCountry, setShowCountry] = useState(false);
   const onClickHandler = () => setShowCountry(!showCountry);
-
+  
+  const country  = countriesFiltered1
+  console.log("country",country)
+  console.log("name",country.name.common)
   return showCountry ? (
-    countriesFiltered.filter((d) => d !== "" && d !== null).map((countries) => (
-      <React.Fragment key={countries.name.common}>
-        <li> {countries.name.common}</li>
-        <li> capital {countries.capital}</li>
-        <li> area {countries.area}</li>
-        <img src={countries.flags.png} alt="Flag" />
+      <React.Fragment key = {index}>
+        <li> {country.name.common}</li>
+        <li> capital {country.capital}</li>
+        <li> area {country.area}</li>
+        <img src={country.flags.png} alt="Flag" />
         <li>
-          {countries.languages &&
-            Object.values(countries.languages)
+          {country.languages &&
+            Object.values(country.languages)
               .filter((d) => d !== "" && d !== null)
               .map((language) => (
                 <React.Fragment key={language}>
@@ -23,10 +25,9 @@ const SingleCountryData = ({ countriesFiltered}) => {
               ))}
         </li>
       </React.Fragment>
-    ))
-  ) : (
+    ) : (
     <li>
-      {" "}
+      {country.name.common}
      
       <div>
         <Button onClick={onClickHandler} />{" "}
