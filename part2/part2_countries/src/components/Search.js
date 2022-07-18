@@ -21,7 +21,7 @@ const Search = ({ countries, searchValue}) => {
 if (searchValue === "") {
   return <ul>{listedCountries}</ul>;
 }
-if (listedCountries.length > 10) {
+if (listedCountries.length > 1 && listedCountries.length <= 10) {
   return (
     <>
       <p>Too many matches, make entry more specific</p>
@@ -38,13 +38,12 @@ if (listedCountries.length === 1) {
   return (
     <>
       <p>Here is the data for </p>
-      <div>
-      <SingleCountryData countriesFiltered = {countriesFiltered} countries={countries} /> 
-       </div>
+      <ul>{countriesFiltered.map((country,index) => <SingleCountryData key = {index} countriesFiltered1 = {country}/>) }
+       </ul>
     </>
-  );
+  )
 }
 
-return <div>sdg</div>;
+return <div><ul>{listedCountries}</ul>;</div>;
 }
 export default Search;
