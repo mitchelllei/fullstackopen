@@ -35,7 +35,7 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      
     }
    const inPhonebook = persons.some(item => item.name === newName) // true
    const inPhonebookNumber = persons.some(item => item.number === newNumber)
@@ -43,6 +43,10 @@ const App = () => {
       console.log('name not in phonebook')
       setPersons(persons.concat(nameObject))
       setNewName('')
+      axios.post('http://localhost:3001/persons', nameObject)
+      .then(response => {
+        console.log("response is ",response)
+      })
     } else {
       alert(`name: ${newName} with number ${newNumber} is already in phonebook`)
     }
