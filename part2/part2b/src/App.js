@@ -3,6 +3,7 @@ import axios from 'axios'
 import Search from './components/Search'
 import Add from './components/Add'
 import Form from './components/form'
+import personService from './services/persons'
 
 
 const App = () => {
@@ -12,14 +13,15 @@ const App = () => {
   const [searchValue, setSearchValue] = useState("")
 
   useEffect(() => {
-    console.log('effect')
-    axios.get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('promise fufilled')
-      setPersons(response.data)
+
+    personService
+    .getAll()
+    .then(initialPersons => {
+    setPersons(initialPersons)
     })
+   
   }, [])
-  console.log('render', persons.length)
+ 
  
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -41,12 +43,15 @@ const App = () => {
    const inPhonebookNumber = persons.some(item => item.number === newNumber)
     if (inPhonebook === false & inPhonebookNumber === false) {
       console.log('name not in phonebook')
-      setPersons(persons.concat(nameObject))
-      setNewName('')
-      axios.post('http://localhost:3001/persons', nameObject)
-      .then(response => {
-        console.log("response is ",response)
+      personService
+      .create(nameObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+
       })
+      setNewName('')
+     
+
     } else {
       alert(`name: ${newName} with number ${newNumber} is already in phonebook`)
     }
