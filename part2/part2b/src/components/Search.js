@@ -2,15 +2,18 @@ import React from 'react'
 import { useState} from 'react'
 import Button from './Button'
 import personService from '../services/persons'
-const Search = ({persons, searchValue}) => {
-  const getID = (object,value) => {
-    return Object.keys(object.find(key => object[key]===value))
-  }
+const Search = ({persons, searchValue,setPersons}) => {
+const [reRenderAfterDelete,setreRenderAfterDelete] = useState([])
+
 
 const onClick = ({id}) => {
   console.log(id)
+  if (window.confirm("Do you want to delete this entry?")){
   personService
   .deleteEntry(id)
+  setPersons(persons.filter((person) => person.id !== id))
+  
+}
 }
 
 return(

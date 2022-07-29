@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Search from './components/Search'
 import Add from './components/Add'
 import Form from './components/form'
@@ -53,12 +52,20 @@ const App = () => {
      
 
     } else {
+
       alert(`name: ${newName} with number ${newNumber} is already in phonebook`)
-    }
+     
+      let index = persons.findIndex(person => {
+        return person.name === newName
+      })
+      let indexCheck = index ? (console.log(index)) : (console.log("Check failed"))
+      personService
+      .update(index, nameObject)
+    
     
   }
   
-
+    }
   return (
     <div>
       <h2>Phonebook</h2>
@@ -67,7 +74,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Search persons= {persons} searchValue={searchValue} />
+      <Search persons= {persons} searchValue={searchValue} setPersons={setPersons} />
     
       <div>
       <Form searchValue={searchValue} setSearchValue={setSearchValue} />
