@@ -54,6 +54,7 @@ const App = () => {
 
       else if (inPhonebook && inPhonebookNumber=== false)
       {
+      if (window.confirm("Do you want to update this entry?")){
       console.log("Phonenumber differs")
       let index = persons.findIndex(person => {
         return person.name === newName
@@ -68,7 +69,7 @@ const App = () => {
       .then(returnedEntry => {
         setPersons(persons.map(person => person.id !== changedEntry.id ? person : returnedEntry))
       })
-      
+    }
       }
      
 
