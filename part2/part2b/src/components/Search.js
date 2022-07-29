@@ -21,7 +21,7 @@ return(
 <>
 {persons.filter(person=> person.name.match(new RegExp(searchValue, "i")))
 .map(filteredPerson => {
-  console.log(filteredPerson)
+  {/* console.log(filteredPerson) */}
   return(
     
     <React.Fragment key = {filteredPerson.id}>

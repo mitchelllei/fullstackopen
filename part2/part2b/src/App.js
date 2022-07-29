@@ -40,6 +40,7 @@ const App = () => {
     }
    const inPhonebook = persons.some(item => item.name === newName) // true
    const inPhonebookNumber = persons.some(item => item.number === newNumber)
+   console.log("In phonebook number is ", inPhonebookNumber)
     if (inPhonebook === false & inPhonebookNumber === false) {
       console.log('name not in phonebook')
       personService
@@ -49,18 +50,33 @@ const App = () => {
 
       })
       setNewName('')
-     
+    }
 
-    } else {
-
-      alert(`name: ${newName} with number ${newNumber} is already in phonebook`)
-     
+      else if (inPhonebook && inPhonebookNumber=== false)
+      {
+      console.log("Phonenumber differs")
       let index = persons.findIndex(person => {
         return person.name === newName
       })
       let indexCheck = index ? (console.log(index)) : (console.log("Check failed"))
+      console.log("is this the correct value? ", persons[index])
+      const changedEntry = {...persons[index], number: newNumber }
+      console.log("changed entry is ",changedEntry)
+      console.log("index is ",index)
       personService
-      .update(index, nameObject)
+      .update(changedEntry.id,changedEntry)
+      .then(returnedEntry => {
+        setPersons(persons.map(person => person.id !== changedEntry.id ? person : returnedEntry))
+      })
+      
+      }
+     
+
+     else {
+
+      alert(`name: ${newName} with number ${newNumber} is already in phonebook`)
+     
+     
     
     
   }
