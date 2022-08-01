@@ -82,6 +82,12 @@ const App = () => {
       .then(returnedEntry => {
         setPersons(persons.map(person => person.id !== changedEntry.id ? person : returnedEntry))
       })
+      .catch(error => {
+        setNotificationMessage(`user ${persons[index].name} was removed from the server`);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 5000)
+      })
       setNotificationMessage(`user ${persons[index].name} number was changed`);
       setTimeout(() => {
         setNotificationMessage(null);
