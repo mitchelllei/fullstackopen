@@ -3,14 +3,16 @@ import Search from './components/Search'
 import Add from './components/Add'
 import Form from './components/form'
 import personService from './services/persons'
-
+import Notification from './components/Notification'
+import "./index.css"
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchValue, setSearchValue] = useState("")
-
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  
   useEffect(() => {
 
     personService
@@ -41,16 +43,27 @@ const App = () => {
    const inPhonebook = persons.some(item => item.name === newName) // true
    const inPhonebookNumber = persons.some(item => item.number === newNumber)
    console.log("In phonebook number is ", inPhonebookNumber)
-    if (inPhonebook === false & inPhonebookNumber === false) {
+    if (inPhonebook === false && inPhonebookNumber === false) {
       console.log('name not in phonebook')
       personService
       .create(nameObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
 
+        
+        
+     
+
       })
-      setNewName('')
+      setNotificationMessage(`user ${nameObject.name} was added to the phonebook`);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 5000)
+        
+      setNewName('');
     }
+    
+
 
       else if (inPhonebook && inPhonebookNumber=== false)
       {
@@ -69,6 +82,10 @@ const App = () => {
       .then(returnedEntry => {
         setPersons(persons.map(person => person.id !== changedEntry.id ? person : returnedEntry))
       })
+      setNotificationMessage(`user ${persons[index].name} number was changed`);
+      setTimeout(() => {
+        setNotificationMessage(null);
+      }, 5000)
     }
       }
      
@@ -86,6 +103,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} />
       <Add addName={addName} newName={newName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
 
 
@@ -96,6 +114,8 @@ const App = () => {
       <div>
       <Form searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
+     
+      
       {/* <div>debug: {persons.id}</div>
       <div>debug: <pre>{JSON.stringify(persons, null, 2)}</pre></div> */}
     </div>
