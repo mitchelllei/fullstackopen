@@ -19,6 +19,7 @@ const onClick = ({id}) => {
 return(
 
 <>
+
 {persons.filter(person=> person.name.match(new RegExp(searchValue, "i")))
 .map(filteredPerson => {
   {/* console.log(filteredPerson) */}
