@@ -1,9 +1,7 @@
 require('dotenv').config();
-const mongoose = require('mongoose')
+const mongoose = require('mongoose') //b
 const http = require('http')
-const express = require('express')
-const app = express()
-const cors = require('cors')
+const app = require('./app') //a
 
 //const Blog1 = require('./models/blog');
 
@@ -15,11 +13,8 @@ const blogSchema = new mongoose.Schema({
     likes: Number
   })
   const Blog = mongoose.model('Blog', blogSchema)
-const mongoUrl = process.env.MONGODB_URI //'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl)
 
-app.use(cors())
-app.use(express.json())
+
 
 app.get('/api/blogs', (request, response) => {
   Blog
