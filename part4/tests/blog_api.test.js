@@ -6,14 +6,14 @@ const api = supertest(app)
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
 
-beforeEach(async () => {
-  await Blog.deleteMany({})
+// beforeEach(async () => {
+//   await Blog.deleteMany({})
 
-  for (let blog of helper.initialBlogs) {
-    let blogObject = new Note(note)
-    await blogObject.save()
-  }
-})
+//   for (let blog of helper.initialBlogs) {
+//     let blogObject = new Note(note)
+//     await blogObject.save()
+//   }
+// })
 
 
 // beforeEach(async () => {
@@ -23,17 +23,12 @@ beforeEach(async () => {
 //   blogObject = new Blog(helper.initialBlog[1])
 //   await blogObject.save()
 // })
-
-test('blogs are returned as json', async () => {
-  (
+test('notes are returned as json', async () => {
   await api
     .get('/api/blogs')
-)
     .expect(200)
     .expect('Content-Type', /application\/json/)
-    
-},1000000)
-
+}, 100000)
 
 
 // test('all blogs are returned', async () => {
