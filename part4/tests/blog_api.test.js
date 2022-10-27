@@ -47,6 +47,10 @@ test('all blogs are returned', async () => {
   expect(response.body).toHaveLength(helper.initialBlog.length)
  
 })
+test('unique identifier is named id', async () => {
+  const response = await api.get('/api/blogs')
+  expect(response.body[0].id).toBeDefined()
+})
 
 // test('a specific note is within the returned notes', async () => {
 //   const response = await api.get('/api/notes')
