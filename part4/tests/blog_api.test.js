@@ -23,6 +23,16 @@ const helper = require('./test_helper')
 //   blogObject = new Blog(helper.initialBlog[1])
 //   await blogObject.save()
 // })
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  let blogObject = new Blog(helper.initialBlog[0])
+  await blogObject.save()
+  blogObject = new Blog(helper.initialBlog[1])
+  await blogObject.save()
+  blogObject = new Blog(helper.initialBlog[2])
+  await blogObject.save()
+})
+
 test('notes are returned as json', async () => {
   await api
     .get('/api/blogs')
@@ -31,13 +41,12 @@ test('notes are returned as json', async () => {
 }, 100000)
 
 
-// test('all blogs are returned', async () => {
-//   jest.setTimeout(300000);
-//   const response = await api.get('/api/blogs')
+test('all blogs are returned', async () => {
+  const response = await api.get('/api/blogs')
 
-//   expect(response.body).toHaveLength(helper.initialBlog.length)
+  expect(response.body).toHaveLength(helper.initialBlog.length)
  
-// })
+})
 
 // test('a specific note is within the returned notes', async () => {
 //   const response = await api.get('/api/notes')
