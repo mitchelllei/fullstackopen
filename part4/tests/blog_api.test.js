@@ -1,10 +1,11 @@
-const mongoose = require('mongoose')
 const supertest = require('supertest')
-const app = require('../app')
-
-const api = supertest(app)
-const Blog = require('../models/blog')
+const mongoose = require('mongoose')
 const helper = require('./test_helper')
+const app = require('../app')
+const api = supertest(app)
+
+const Blog = require('../models/blog')
+
 
 
 beforeEach(async () => {
@@ -99,7 +100,7 @@ expect(blog.likes).toBe(0)
 
 
 // This test seems to either timeout or if I increase the time it never resolves.
-// It seems like it stuck on something
+// It seems like its stuck on something
 test('if missing title or url responds with 400', async() => {
 const newBlogNoTitleNoURL = {
   author: "Michael Chant122221111",
@@ -113,7 +114,28 @@ const response = await api.get('/api/blogs')
 
 expect(response.body).toHaveLength(initialNotes.length)
 
-},1000000)
+},100000)
+
+describe('deletion of a blog', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogsAtStart = await helper.initialBlog()
+    const blogToDelete = notesAtStart[0]
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const blogsAtEnd = await helper.initialBlog()
+
+    expect(blogsAtEnd).toHaveLength(
+      helper.initialNotes.length - 1
+    )
+
+    const contents = blogsAtEnd.map(r => r.content)
+
+    expect(contents).not.toContain(blogToDelete.content)
+  })
+})
 
 afterAll(() => {
   mongoose.connection.close()
