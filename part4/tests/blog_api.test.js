@@ -6,6 +6,7 @@ const api = supertest(app)
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
 
+
 beforeEach(async () => {
   await Blog.deleteMany({})
   await Blog.insertMany(helper.initialBlog)
@@ -66,8 +67,7 @@ test('a new blog post can be added to database', async () => {
   const newBlog = {
     title: "React patterns1111111",
     author: "Michael Chant11111",
-    url: "https://reactpatterns111111.com/",
-    likes: 71,}
+    url: "https://reactpatterns111111.com/"}
   
   await api
     .post('/api/blogs')
@@ -78,6 +78,24 @@ test('a new blog post can be added to database', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body).toHaveLength(helper.initialBlog.length + 1)
 },100000)
+
+test('if likes are missing defaults to 0', async () => {
+
+  const newBlogMissingLikes =  {
+    title: "React patterns111222222211111",
+    author: "Michael Chant122221111",
+    url: "https://reactpatterns112221111.com/"}
+
+ await api
+.post('/api/blogs')
+.send(newBlogMissingLikes)
+.expect(201)
+.expect('Content-Type', /application\/json/)
+const response = await api.get('/api/blogs')
+const blog = response.body.find(r => r.title === newBlogMissingLikes.title);
+expect(blog.likes).toBe(0)
+},10000)
+
 
 
 afterAll(() => {

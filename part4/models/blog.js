@@ -7,8 +7,14 @@ const blogSchema = new mongoose.Schema({
     title: String,
     author: String,
     url: String,
-    likes: Number
+    likes:Number
   })
+ blogSchema.pre('save',function(next) {
+    if(!this.likes)
+        this.likes = 0
+
+    next();
+})
   blogSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
