@@ -10,7 +10,7 @@ const helper = require('./test_helper')
 beforeEach(async () => {
   await Blog.deleteMany({})
   await Blog.insertMany(helper.initialBlog)
-},100000)
+})
 
 
 // beforeEach(async () => {
@@ -79,6 +79,7 @@ test('a new blog post can be added to database', async () => {
   expect(response.body).toHaveLength(helper.initialBlog.length + 1)
 },100000)
 
+
 test('if likes are missing defaults to 0', async () => {
 
   const newBlogMissingLikes =  {
@@ -97,6 +98,22 @@ expect(blog.likes).toBe(0)
 },10000)
 
 
+// This test seems to either timeout or if I increase the time it never resolves.
+// It seems like it stuck on something
+test('if missing title or url responds with 400', async() => {
+const newBlogNoTitleNoURL = {
+  author: "Michael Chant122221111",
+  likes : 6
+}
+ await api.post('/api/blogs')
+.send(newBlogNoTitleNoURL)
+.expect(400)
+
+const response = await api.get('/api/blogs')
+
+expect(response.body).toHaveLength(initialNotes.length)
+
+},1000000)
 
 afterAll(() => {
   mongoose.connection.close()
