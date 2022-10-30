@@ -1,13 +1,13 @@
 import React,{ useState} from 'react'
-import Button from "./Button";
+import Button from "./Button"
+import Weather from "./Weather"
 
 const SingleCountryData = ({index,  countriesFiltered1}) => {
   const [showCountry, setShowCountry] = useState(false);
   const onClickHandler = () => setShowCountry(!showCountry);
   
   const country  = countriesFiltered1
-  console.log("country",country)
-  console.log("name",country.name.common)
+
   return showCountry ? (
       <React.Fragment key = {index}>
         <li> {country.name.common}</li>
@@ -23,6 +23,9 @@ const SingleCountryData = ({index,  countriesFiltered1}) => {
                   <p>{language}</p>
                 </React.Fragment>
               ))}
+        </li>
+        <li> 
+        <Weather city = {country.capital}/>
         </li>
       </React.Fragment>
     ) : (
