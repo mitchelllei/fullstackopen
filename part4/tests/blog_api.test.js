@@ -68,8 +68,9 @@ test('a new blog post can be added to database', async () => {
   const newBlog = {
     title: "React patterns1111111",
     author: "Michael Chant11111",
-    url: "https://reactpatterns111111.com/"}
-  
+    url: "https://reactpatterns111111.com/",
+    likes: 5}
+
   await api
     .post('/api/blogs')
     .send(newBlog)
@@ -114,7 +115,7 @@ const response = await api.get('/api/blogs')
 
 expect(response.body).toHaveLength(initialNotes.length)
 
-},100000)
+},10000)
 
 describe('deletion of a blog', () => {
   test('succeeds with status code 204 if id is valid', async () => {
@@ -135,6 +136,28 @@ describe('deletion of a blog', () => {
 
     expect(contents).not.toContain(blogToDelete.content)
   })
+})
+
+test('update entries of likes', async() => {
+  
+  const updateEntriesBlog = {
+    title: "React patterns1111111",
+    author: "Michael Chant11111",
+    url: "https://reactpatterns111111.com/",
+    likes: 5}
+    const result = await api.post('/api/blogs')
+    .send(updateEntriesBlog)
+    .expect(201)
+
+    updateEntriesBlog.likes = updateEntriesBlog.likes+1
+    const updateResult = await api
+    .put(`/api/blogs/${result.body.id}`)
+    .send(updateEntriesBlog)
+    .expect(200)
+    const checkResult = await api.get(`/api/blogs/${result.body.id}`)  
+    console.log('AAA',updateResult)
+    expect(checkResult.body.likes).toBe(updateEntriesBlog.likes)
+    
 })
 
 afterAll(() => {
