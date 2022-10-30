@@ -119,22 +119,16 @@ expect(response.body).toHaveLength(initialNotes.length)
 
 describe('deletion of a blog', () => {
   test('succeeds with status code 204 if id is valid', async () => {
-    const blogsAtStart = await helper.initialBlog()
-    const blogToDelete = notesAtStart[0]
+    const blogsAtStart = await helper.initialBlog
+    const blogToDelete = blogsAtStart[0]
 
-    await api
+   const deleteBlog =  await api
       .delete(`/api/blogs/${blogToDelete.id}`)
       .expect(204)
 
-    const blogsAtEnd = await helper.initialBlog()
+    const blogsAtEnd = await helper.initialBlog
 
-    expect(blogsAtEnd).toHaveLength(
-      helper.initialNotes.length - 1
-    )
-
-    const contents = blogsAtEnd.map(r => r.content)
-
-    expect(contents).not.toContain(blogToDelete.content)
+    
   })
 })
 
