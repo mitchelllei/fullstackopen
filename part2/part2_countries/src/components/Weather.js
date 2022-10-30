@@ -11,9 +11,8 @@ const Weather = ({ city }) => {
     const apiKey = process.env.REACT_APP_API_KEY;
 
     async function getWeather() {
-      const { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city[0]},uk&APPID=${apiKey}`
-       
-        );
+      // const { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city[0]},uk&APPID=${apiKey}`
+     const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city[0]}&appid=${apiKey}`)
       setWeather(data);
     }
     // `http://api.openweathermap.org/data/2.5/weather?q=${city},uk&APPID=${apiKey}`
@@ -33,7 +32,8 @@ const Weather = ({ city }) => {
   } else {
     return (
       <>
-        <p>afasf</p>
+        <p>Temperature is {Math.round(weather.main.temp -273.15)} Celcius</p>
+        <p>Wind is {weather.wind.speed}m/s</p>
       </>
     );
   }
