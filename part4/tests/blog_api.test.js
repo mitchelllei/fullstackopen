@@ -149,11 +149,11 @@ test('update entries of likes', async() => {
     .send(updateEntriesBlog)
     .expect(200)
     const checkResult = await api.get(`/api/blogs/${result.body.id}`)  
-    console.log('AAA',updateResult)
+    console.log('AAAA',updateResult)
     expect(checkResult.body.likes).toBe(updateEntriesBlog.likes)
     
 })
 
 afterAll(() => {
   mongoose.connection.close()
-}) 
+})    
