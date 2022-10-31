@@ -107,13 +107,9 @@ const newBlogNoTitleNoURL = {
   author: "Michael Chant122221111",
   likes : 6
 }
- await api.post('/api/blogs')
+ const response = await api.post('/api/blogs')
 .send(newBlogNoTitleNoURL)
 .expect(400)
-
-const response = await api.get('/api/blogs')
-
-expect(response.body).toHaveLength(initialNotes.length)
 
 },10000)
 

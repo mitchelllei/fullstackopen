@@ -11,5 +11,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/blogs', blogsRouter)
+app.use(function(err,req,res,next){
+    res.status(400).send({error: err.message})
+})
 
 module.exports = app
