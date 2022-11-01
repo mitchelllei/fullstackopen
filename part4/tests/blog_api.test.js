@@ -15,7 +15,7 @@ let token
 beforeEach(async () => {
   await User.deleteMany({})
   const passwordHash = await bcrypt.hash('sekret', 10)
-    const user = new User({ username: 'root', passwordHash })
+    const user = new User({ username: 'root',name:"test", passwordHash })
     await user.save()
     
     const userLogin = {
@@ -23,7 +23,8 @@ beforeEach(async () => {
       id: user.id,
     }
     
-    let token = jwt.sign(userLogin, process.env.SECRET)
+  let token = jwt.sign(userLogin, process.env.SECRET)
+ 
   await Blog.deleteMany({})
   await Blog.insertMany(helper.initialBlog)
 })
@@ -185,7 +186,7 @@ test('a new blog post can be added to a logged in user', async () => {
     .expect(201)
     .expect('Content-Type', /application\/json/)
     console.log("BBBB")
-})
+},100000)
 
 afterAll(() => {
   mongoose.connection.close()
