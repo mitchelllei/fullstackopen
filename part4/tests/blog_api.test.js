@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 const helper = require('./test_helper')
@@ -6,9 +8,22 @@ const api = supertest(app)
 
 const Blog = require('../models/blog')
 
+const User = require('../models/user')
 
+let token
 
 beforeEach(async () => {
+  await User.deleteMany({})
+  const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ username: 'root', passwordHash })
+    await user.save()
+    
+    const userLogin = {
+      username: user.username,
+      id: user.id,
+    }
+    
+    let token = jwt.sign(userLogin, process.env.SECRET)
   await Blog.deleteMany({})
   await Blog.insertMany(helper.initialBlog)
 })
@@ -152,6 +167,24 @@ test('update entries of likes', async() => {
     console.log('AAA',updateResult)
     expect(checkResult.body.likes).toBe(updateEntriesBlog.likes)
     
+})
+
+test('a new blog post can be added to a logged in user', async () => {
+
+  
+  const newBlog = {
+    title: "React patterns1111111",
+    author: "Michael Chant11111",
+    url: "https://reactpatterns111111.com/",
+    likes: 5}
+  
+ const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `bearer ${token}` )
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+    console.log("BBBB")
 })
 
 afterAll(() => {
