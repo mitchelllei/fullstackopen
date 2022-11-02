@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 const helper = require('./test_helper')
+const makeUser = require('./create_user')
 const app = require('../app')
 const api = supertest(app)
 
@@ -10,24 +11,33 @@ const Blog = require('../models/blog')
 
 const User = require('../models/user')
 
-let token
 
 beforeEach(async () => {
   await User.deleteMany({})
-  const passwordHash = await bcrypt.hash('sekret', 10)
-    const user = new User({ username: 'root',name:"test", passwordHash })
-    await user.save()
-    
-    const userLogin = {
-      username: user.username,
-      id: user.id,
-    }
-    
-  let token = jwt.sign(userLogin, process.env.SECRET)
- 
+
   await Blog.deleteMany({})
   await Blog.insertMany(helper.initialBlog)
 })
+
+
+test('a new blog post can be added to a logged in user', async () => {
+
+  
+  const newBlog = {
+    title: "React patterns1111111",
+    author: "Michael Chant11111",
+    url: "https://reactpatterns111111.com/",
+    likes: 5}
+    const { token, user } = await makeUser.createUser()
+  
+ const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `bearer ${token}` )
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+    console.log("BBBB")
+},100000)
 
 
 // beforeEach(async () => {
@@ -169,24 +179,6 @@ test('update entries of likes', async() => {
     expect(checkResult.body.likes).toBe(updateEntriesBlog.likes)
     
 })
-
-test('a new blog post can be added to a logged in user', async () => {
-
-  
-  const newBlog = {
-    title: "React patterns1111111",
-    author: "Michael Chant11111",
-    url: "https://reactpatterns111111.com/",
-    likes: 5}
-  
- const response = await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .set('Authorization', `bearer ${token}` )
-    .expect(201)
-    .expect('Content-Type', /application\/json/)
-    console.log("BBBB")
-},100000)
 
 afterAll(() => {
   mongoose.connection.close()

@@ -9,11 +9,11 @@ const blogSchema = new mongoose.Schema({
     author: String,
     url: {type: String,
       required: true},
+    likes: Number,
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    },
-    likes:Number
+    }
   })
  blogSchema.pre('save',function(next) {
     if(!this.likes)
