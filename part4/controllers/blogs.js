@@ -69,16 +69,29 @@ blogsRouter.post('/', async (request, response) => {
 )
 
   blogsRouter.delete('/:id', async (request, response) => {
-
+    const token = getTokenFrom(request)
+    console.log("Token is", token)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: ' not logged in as correct user token missing or invalid' })
+    } else{
     const blog = await Blog.findById(request.params.id)
     console.log(makeUser.token)
     console.log(request.decodedToken)
     console.log(request)
     console.log(blog)
     console.log(blog.user)
-    Blog.findByIdAndRemove(request.params.id)
-        response.status(204).end()
-  })
+    if (blog.user.toString() === decodedToken.id.toString()) {
+      await Blog.findByIdAndRemove(request.params.id)
+      response.status(204).end()
+      console.log("Delete succesful?")
+  } else {
+      response.status(400).end()
+    }
+  }
+}
+)
+  
 
   blogsRouter.put('/:id', (request, response) => {
     const body = request.body
