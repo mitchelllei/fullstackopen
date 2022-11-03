@@ -38,6 +38,7 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
     const {title, author, url, likes } = request.body
+    
 
     const token = getTokenFrom(request)
     console.log("Token is", token)
@@ -46,8 +47,8 @@ blogsRouter.post('/', async (request, response) => {
     if (!token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
-    const user = await User.findById(decodedToken.id)
-    
+    // const user = await User.findById(decodedToken.id)
+    const user = request.user
     const blog = new Blog({title,
       author,
       url,
@@ -73,7 +74,7 @@ blogsRouter.post('/', async (request, response) => {
     console.log("Token is", token)
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
-      return response.status(401).json({ error: ' not logged in as correct user token missing or invalid' })
+      return response.status(401).json({ error: ' not logged in as correct user token missing or incorrect' })
     } else{
     const blog = await Blog.findById(request.params.id)
     console.log(makeUser.token)
