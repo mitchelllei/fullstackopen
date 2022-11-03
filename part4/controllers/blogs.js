@@ -82,7 +82,8 @@ blogsRouter.post('/', async (request, response) => {
     console.log(request)
     console.log(blog)
     console.log(blog.user)
-    if (blog.user.toString() === decodedToken.id.toString()) {
+    const user = request.user
+    if (user.id.toString() === decodedToken.id.toString()) {
       await Blog.findByIdAndRemove(request.params.id)
       response.status(204).end()
       console.log("Delete succesful?")
