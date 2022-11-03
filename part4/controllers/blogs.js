@@ -3,6 +3,7 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const loginRouter = require('./login')
+const makeUser = require('../utils/token_extractor')
 
 const getTokenFrom = request => {
   const authorization = request.get('authorization')
@@ -67,7 +68,14 @@ blogsRouter.post('/', async (request, response) => {
 
 )
 
-  blogsRouter.delete('/:id', (request, response) => {
+  blogsRouter.delete('/:id', async (request, response) => {
+
+    const blog = await Blog.findById(request.params.id)
+    console.log(makeUser.token)
+    console.log(request.decodedToken)
+    console.log(request)
+    console.log(blog)
+    console.log(blog.user)
     Blog.findByIdAndRemove(request.params.id)
         response.status(204).end()
   })

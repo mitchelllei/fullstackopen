@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
-
+const jwt = require('jsonwebtoken')
 const api = supertest(app)
 const User = require('../models/user')
 const Blog = require('../models/blog')
