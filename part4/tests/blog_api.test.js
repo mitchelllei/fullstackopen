@@ -29,7 +29,7 @@ test('a new blog post can be added to a logged in user', async () => {
     url: "https://reactpatterns111111.com/",
     likes: 5}
     const { token, user } = await makeUser.createUser()
-  
+
  const response = await api
     .post('/api/blogs')
     .send(newBlog)
@@ -39,33 +39,6 @@ test('a new blog post can be added to a logged in user', async () => {
     console.log("BBBB")
 },100000)
 
-
-// beforeEach(async () => {
-//   await Blog.deleteMany({})
-
-//   for (let blog of helper.initialBlogs) {
-//     let blogObject = new Note(note)
-//     await blogObject.save()
-//   }
-// })
-
-
-// beforeEach(async () => {
-//   await Blog.deleteMany({})
-//   let blogObject = new Blog(helper.initialBlog[0])
-//   await blogObject.save()
-//   blogObject = new Blog(helper.initialBlog[1])
-//   await blogObject.save()
-// })
-// beforeEach(async () => {
-//   await Blog.deleteMany({})
-//   let blogObject = new Blog(helper.initialBlog[0])
-//   await blogObject.save()
-//   blogObject = new Blog(helper.initialBlog[1])
-//   await blogObject.save()
-//   blogObject = new Blog(helper.initialBlog[2])
-//   await blogObject.save()
-// })
 
 test('notes are returned as json', async () => {
   await api
@@ -90,26 +63,29 @@ test('unique identifier is named id', async () => {
 
 test('a new blog post can be added to database', async () => {
 
-  
+  const { token, user } = await makeUser.createUser()
   const newBlog = {
     title: "React patterns1111111",
     author: "Michael Chant11111",
     url: "https://reactpatterns111111.com/",
     likes: 5}
 
-  await api
+  const response = await api
     .post('/api/blogs')
+    .set('Authorization', `bearer ${token}` )
     .send(newBlog)
+    
     .expect(201)
     .expect('Content-Type', /application\/json/)
     console.log("BBBB")
-  const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(helper.initialBlog.length + 1)
-},100000)
+  const newResponse = await api.get('/api/blogs')
+  expect(newResponse.body).toHaveLength(helper.initialBlog.length + 1)
+},10000)
 
 
 test('if likes are missing defaults to 0', async () => {
-
+ const { token, user } = await makeUser.createUser()
+    
   const newBlogMissingLikes =  {
     title: "React patterns111222222211111",
     author: "Michael Chant122221111",
@@ -118,6 +94,7 @@ test('if likes are missing defaults to 0', async () => {
  await api
 .post('/api/blogs')
 .send(newBlogMissingLikes)
+.set('Authorization', `bearer ${token}` )
 .expect(201)
 .expect('Content-Type', /application\/json/)
 const response = await api.get('/api/blogs')
