@@ -39,13 +39,63 @@ const App = () => {
       })
   }, [])
 
-  // ...
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <div>
+        username
+          <input
+          type="text"
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+          <input
+          type="password"
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
+    </form>      
+  )
+  const handleBlogChange = (event) => {
+    setNewBlog(event.target.value)
+  }
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <input
+        value={newBlog}
+        onChange={handleBlogChange}
+      />
+      <button type="submit">save</button>
+    </form>  
+  )
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newBlog.title,
+      url: newBlog.url,
+      author: newBlog.author,
+      likes: newBlog.likes,
+      user: newBlog.user
+    }
 
-
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewBlog('')
+      })
+  }
   return (
     <div>
+    
       <h1></h1>
-
+    
 
       <form onSubmit={handleLogin}>
         <div>
