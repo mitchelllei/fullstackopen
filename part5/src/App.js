@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 
-import Blog from './components/Blog
+import Blog from './components/Blog'
+
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -13,10 +14,9 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  
+
   const handleLogin = async (event) => {
     event.preventDefault()
-    
     try {
       const user = await loginService.login({
         username, password,
@@ -25,7 +25,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -41,16 +41,11 @@ const App = () => {
 
   // ...
 
-  const handleLogin = (event) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
-  }
 
   return (
     <div>
-      <h1>Blogs</h1>
+      <h1></h1>
 
-      <Notification message={errorMessage} />
 
       <form onSubmit={handleLogin}>
         <div>
