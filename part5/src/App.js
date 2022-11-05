@@ -14,7 +14,6 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  const [isLoggedIn, setisLoggedIn] = useState(false)
 
 
   useEffect(() => {
@@ -53,7 +52,6 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
-    setisLoggedIn(true)
   }
 
   const handleLogout = async (event) => {
@@ -61,13 +59,14 @@ const App = () => {
     event.preventDefault()
     try{
       window.localStorage.removeItem('loggedBlogAppUser')
+      setUser(null)
     } catch (exception){
       setErrorMessage("error logging out")
       setTimeout(()=> {
         setErrorMessage(null)
       },5000)
     }
-    setisLoggedIn(false)
+    
   }
 
 
