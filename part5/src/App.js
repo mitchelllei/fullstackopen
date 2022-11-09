@@ -134,6 +134,7 @@ const App = () => {
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlog('')
+        console.log("BLOGS IS",blogs)
       })
   }
 
@@ -180,11 +181,31 @@ const App = () => {
   }
   const makeBlogObject = (event) => {
     event.preventDefault();
-    var data = new FormData(event.target);
-    let formObject = Object.fromEntries(data.entries());
-    formObject["User"] = (user.username)
-    console.log("USER",user.username)
-    console.log(formObject);
+    const data = new FormData(event.target);
+    const formObject = Object.fromEntries(data.entries());
+    const blogObject = {title: formObject.title, url: formObject.url, author: formObject.author,likes: formObject.likes}
+  
+    console.log("blogObject",blogObject)
+    blogService.create(blogObject)
+    .then((response) => {
+      setBlogs(blogs.concat(response.data))
+      console.log("blogObject is now after service function",blogObject)
+  // formObject["user"] = (user.username)
+    // console.log("USER",user.username)
+    // console.log(formObject);
+    //   .then((response) => {
+    //     if (response.status === 201) {
+    //         setError(`${response.data.title} by ${response.data.author} added`)
+    //         setTimeout(() => setError(null), 2000)
+    //         setBlogs(blogs.concat(response.data))
+    //         setDisplay(false)
+    //     } else {
+    //         setError(`Unable to add ${response.data.title} by ${response.data.author}`)
+    //         setTimeout(() => setError(null), 2000)
+    //     }
+    // })
+    }
+    )
   }
   if (user === null) {
     return (
@@ -226,33 +247,35 @@ const App = () => {
         <input
         type = "text"
         value = {title}
-        name = "Title"
+        name = "title"
         onChange={({ target }) =>setTitle(target.value)}
         />
       </div>
+      url
+        <input 
+        type = "text"
+        value ={url}
+        name="url"
+        onChange={({ target }) => setUrl(target.value)}
+      />
+      <div>
+   
       <div>
       author
         <input 
         type = "text"
         value ={author}
-        name="Author"
+        name="author"
         onChange={({ target }) => setAuthor(target.value)}
       />
       </div>
-      <div>
-      url
-        <input 
-        type = "text"
-        value ={url}
-        name="Url"
-        onChange={({ target }) => setUrl(target.value)}
-      />
+     
       <div>
       likes
         <input 
         type = "text"
         value ={likes}
-        name="Likes"
+        name="likes"
         onChange={({ target }) => setLikes(target.value)}
       />
       <button type="submit">add blog</button>
@@ -263,8 +286,10 @@ const App = () => {
     
   
 
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.map(blog => {
+     console.log("BLOG IS",blog)
+      return <Blog key={blog.id} blog={blog} />
+}
       )}
       <form onSubmit={handleLogout}>
       <button type="submit">logout</button>
