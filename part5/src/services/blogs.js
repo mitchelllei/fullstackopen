@@ -31,7 +31,7 @@ const create = async newObject => {
     headers: { Authorization: token },
   }
 
-  const response = await axios.post(baseUrl, {title: newObject.title, url: newObject.url, author: newObject.author,likes: newObject.likes}, config)
+  const response = await axios.post(baseUrl, newObject, config)
   return response.data
 }
 

@@ -179,17 +179,27 @@ const App = () => {
       setLikes('')
   
   }
-  const makeBlogObject = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    const formObject = Object.fromEntries(data.entries());
-    const blogObject = {title: formObject.title, url: formObject.url, author: formObject.author,likes: formObject.likes}
+  const makeBlogObject = async (event) => {
   
-    console.log("blogObject",blogObject)
-    blogService.create(blogObject)
-    .then((response) => {
-      setBlogs(blogs.concat(response.data))
-      console.log("blogObject is now after service function",blogObject)
+try {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  const formObject = Object.fromEntries(data.entries());
+  const blogObject = {title: formObject.title, url: formObject.url, author: formObject.author,likes: formObject.likes}
+  console.log("blogObject",blogObject)
+  const madeBlog = await blogService
+  .create(blogObject)
+ 
+  setBlogs(blogs.concat(madeBlog))
+  console.log("Added",madeBlog)
+  console.log("All blogs is ", blogs)
+} catch (e) {
+  console.log('Error')
+  }
+   
+   }
+    
+      
   // formObject["user"] = (user.username)
     // console.log("USER",user.username)
     // console.log(formObject);
@@ -204,9 +214,7 @@ const App = () => {
     //         setTimeout(() => setError(null), 2000)
     //     }
     // })
-    }
-    )
-  }
+ 
   if (user === null) {
     return (
       <div>
@@ -281,16 +289,19 @@ const App = () => {
       <button type="submit">add blog</button>
       </div>
       </div>
+      <div>
+      {blogs.map(blog => {
+  console.log("BLOG ISqqq",blog)
+   return <Blog key={blog.id} blog={blog} />
+}
+   )}
+      </div>
       </any>
     </form>
     
   
 
-      {blogs.map(blog => {
-     console.log("BLOG IS",blog)
-      return <Blog key={blog.id} blog={blog} />
-}
-      )}
+
       <form onSubmit={handleLogout}>
       <button type="submit">logout</button>
       
@@ -317,3 +328,5 @@ form.addEventListener('submit', (e) => {
   new FormData()
 })
 </script> */}
+
+
