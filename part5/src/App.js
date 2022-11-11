@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 
 import Blog from './components/Blog'
-
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
+
 import blogService from './services/blogs'
 import loginService from './services/login'
+
+
 import './index.css'
 
 const App = () => {
@@ -21,7 +26,9 @@ const App = () => {
   const [url, setUrl] = useState('')
   const [likes, setLikes] = useState('')
 
-  
+  const [loginVisible, setLoginVisible] = useState(false)
+
+
 
   useEffect(() => {
     blogService
@@ -38,6 +45,7 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -79,29 +87,29 @@ const App = () => {
   }
 
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>      
-  )
+// const loginForm = () => (
+//   <form onSubmit={handleLogin}>
+//     <div>
+//       username
+//         <input
+//         type="text"
+//         value={username}
+//         name="Username"
+//         onChange={({ target }) => setUsername(target.value)}
+//       />
+//     </div>
+//     <div>
+//       password
+//         <input
+//         type="password"
+//         value={password}
+//         name="Password"
+//         onChange={({ target }) => setPassword(target.value)}
+//       />
+//     </div>
+//     <button type="submit">login</button>
+//   </form>      
+// )
   const handleBlogChange = (event) => {
     setNewBlog(event.target.value)
   }
@@ -176,32 +184,24 @@ try {
  
   if (user === null) {
     return (
-      <div>
+      <React.Fragment>
         <h2>Log in to application</h2>
         <Notification message={errorMessage} />
-        <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
+        
+        <Togglable buttonLabel='login'>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
           />
-        </div>
+        </Togglable> :
         <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
+          <p>{user} logged in</p>
+          
         </div>
-        <button type="submit">login</button>
-      </form>
-
-      </div>
+        </React.Fragment>
     )
   }
 
@@ -281,16 +281,10 @@ try {
 
 export default App
 
-{/* <script>
-const form = document.querrySelector('form')
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const fd = new FormData(form)
-  console.log(fd)
-  new FormData()
-})
-</script> */}
 
 
 {/* <h1 style={{ fontSize: "5rem" }}>{errorMessage}</h1>   */}
+{/* <Togglable buttonLabel="new note">
+            <NoteForm createNote={addNote} />
+          </Togglable> */}
