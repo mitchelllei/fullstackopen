@@ -292,7 +292,7 @@ try {
       <div>
       {blogs.map(blog => {
   console.log("BLOG ISqqq",blog)
-   return <Blog key={blog.id} blog={blog} />
+   return <Blog key={blog.id} blog={blog} /> 
 }
    )}
       </div>
