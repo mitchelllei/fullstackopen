@@ -5,6 +5,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './index.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([]) 
@@ -20,6 +21,7 @@ const App = () => {
   const [url, setUrl] = useState('')
   const [likes, setLikes] = useState('')
 
+  
 
   useEffect(() => {
     blogService
@@ -48,11 +50,12 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogAppUser', JSON.stringify(user)
       ) 
-
+      setErrorMessage("Logged in Succesfully")
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
+      console.log("Error Logging In")
       setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -65,6 +68,7 @@ const App = () => {
     try{
       window.localStorage.removeItem('loggedBlogAppUser')
       setUser(null)
+      setErrorMessage("Logged out Succesfully")
     } catch (exception){
       setErrorMessage("error logging out")
       setTimeout(()=> {
@@ -101,42 +105,8 @@ const App = () => {
   const handleBlogChange = (event) => {
     setNewBlog(event.target.value)
   }
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <input
-        value={newBlog}
-        onChange={handleBlogChange}
-      />
-      <button type="submit">save</button>
-    </form>  
-  )
-  // const makeBlogObject = ({title, author, url,user,  likes =  0}) => {
-  //   const blogObject = {
-  //     title: title,
-  //     url: url,
-  //     author: author,
-  //     likes: likes,
-  //     user: user
-  //   }
-  // }
-  const addBlog = (event,) => {
-    event.preventDefault()
-    const blogObject = {
-      title: newBlog.title,
-      url: newBlog.url,
-      author: newBlog.author,
-      likes: newBlog.likes,
-      user: user
-    }
-
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setNewBlog('')
-        console.log("BLOGS IS",blogs)
-      })
-  }
+  
+  
 
   const handleTitleChange = ({ target }) => {
     setTitle(target.value)
@@ -193,32 +163,22 @@ try {
   setBlogs(blogs.concat(madeBlog))
   console.log("Added",madeBlog)
   console.log("All blogs is ", blogs)
+  setErrorMessage("Blog added succesfully")
 } catch (e) {
   console.log('Error')
+  setErrorMessage("Failed to add new blog")
   }
    
    }
     
       
-  // formObject["user"] = (user.username)
-    // console.log("USER",user.username)
-    // console.log(formObject);
-    //   .then((response) => {
-    //     if (response.status === 201) {
-    //         setError(`${response.data.title} by ${response.data.author} added`)
-    //         setTimeout(() => setError(null), 2000)
-    //         setBlogs(blogs.concat(response.data))
-    //         setDisplay(false)
-    //     } else {
-    //         setError(`Unable to add ${response.data.title} by ${response.data.author}`)
-    //         setTimeout(() => setError(null), 2000)
-    //     }
-    // })
+  
  
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={errorMessage} />
         <form onSubmit={handleLogin}>
         <div>
           username
@@ -249,7 +209,10 @@ try {
     <React.Fragment>
       <h2>blogs</h2>
       <form onSubmit={makeBlogObject}>
-      <any element or components>
+      
+      <div>
+      <Notification message={errorMessage} />
+      </div>
       <div>
         title
         <input
@@ -296,7 +259,7 @@ try {
 }
    )}
       </div>
-      </any>
+     
     </form>
     
   
@@ -330,3 +293,4 @@ form.addEventListener('submit', (e) => {
 </script> */}
 
 
+{/* <h1 style={{ fontSize: "5rem" }}>{errorMessage}</h1>   */}
