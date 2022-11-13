@@ -201,21 +201,7 @@ try {
         </Togglable> :
         <div>
           <p>{user} logged in</p>
-          
-        </div>
-        </React.Fragment>
-    )
-  }
-
-  return (
-    <React.Fragment>
-      <h2>blogs</h2>
-      
-      
-      <div>
-      <Notification message={errorMessage} />
-      </div>
-      <div>
+          <Togglable buttonLabel='add blog'>
         <ToggleBlog
     handleSubmit= {makeBlogObject}
     handleTitleChange = {({ target }) =>setTitle(target.value)}
@@ -226,6 +212,24 @@ try {
     url = {url}
     author = {author}
     likes = {likes} />
+    </Togglable>
+          
+        </div>
+        </React.Fragment>
+    )
+  }
+
+  return (
+    <React.Fragment>
+    
+      <h2>blogs</h2>
+      console.log("IN THIS SECTION")
+      
+      <div>
+      <Notification message={errorMessage} />
+      </div>
+      <div>
+     
       </div>
   
       <div>
@@ -239,12 +243,12 @@ try {
     
   
 
-
+      <Togglable buttonLabel='logout'>
       <form onSubmit={handleLogout}>
       <button type="submit">logout</button>
       
       </form>
-     
+      </Togglable>
      
     </React.Fragment>
     

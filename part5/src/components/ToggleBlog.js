@@ -1,4 +1,4 @@
-import React from "react"
+
 
 const ToggleBlog = ({
    handleSubmit,
@@ -12,7 +12,7 @@ const ToggleBlog = ({
     likes,
    }) => {
     return (
-       <div>
+       
         <form onSubmit={handleSubmit}>
         <div>
         title
@@ -23,6 +23,7 @@ const ToggleBlog = ({
         onChange={ handleTitleChange}
         />
       </div>
+      <div>
       url
         <input 
         type = "text"
@@ -30,9 +31,9 @@ const ToggleBlog = ({
         name="url"
         onChange={handleUrlChange}
       />
+      </div>
       <div>
    
-      <div>
       author
         <input 
         type = "text"
@@ -50,11 +51,11 @@ const ToggleBlog = ({
         name="likes"
         onChange={handleLikesChange}
       />
+      </div>
       <button type="submit">add blog</button>
-      </div>
-      </div>
+      
       </form>
-      </div>
+      
     )
    }
    export default ToggleBlog
