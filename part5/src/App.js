@@ -5,12 +5,14 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import ToggleBlog from './components/ToggleBlog'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 
 import './index.css'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([]) 
@@ -208,50 +210,24 @@ try {
   return (
     <React.Fragment>
       <h2>blogs</h2>
-      <form onSubmit={makeBlogObject}>
+      
       
       <div>
       <Notification message={errorMessage} />
       </div>
       <div>
-        title
-        <input
-        type = "text"
-        value = {title}
-        name = "title"
-        onChange={({ target }) =>setTitle(target.value)}
-        />
+        <ToggleBlog
+    handleSubmit= {makeBlogObject}
+    handleTitleChange = {({ target }) =>setTitle(target.value)}
+    handleUrlChange = {({ target }) =>setUrl(target.value)}
+    handleAuthorChange = {({ target }) =>setAuthor(target.value)}
+    handleLikesChange = {({ target }) =>setLikes(target.value)}
+    title = {title}
+    url = {url}
+    author = {author}
+    likes = {likes} />
       </div>
-      url
-        <input 
-        type = "text"
-        value ={url}
-        name="url"
-        onChange={({ target }) => setUrl(target.value)}
-      />
-      <div>
-   
-      <div>
-      author
-        <input 
-        type = "text"
-        value ={author}
-        name="author"
-        onChange={({ target }) => setAuthor(target.value)}
-      />
-      </div>
-     
-      <div>
-      likes
-        <input 
-        type = "text"
-        value ={likes}
-        name="likes"
-        onChange={({ target }) => setLikes(target.value)}
-      />
-      <button type="submit">add blog</button>
-      </div>
-      </div>
+  
       <div>
       {blogs.map(blog => {
   console.log("BLOG ISqqq",blog)
@@ -260,7 +236,6 @@ try {
    )}
       </div>
      
-    </form>
     
   
 
