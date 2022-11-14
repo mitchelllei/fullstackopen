@@ -227,7 +227,12 @@ try {
                     likes = {likes} />
                 </Togglable>
                 <div>
-
+                <Togglable buttonLabel='logout'>
+                    <form onSubmit={handleLogout}>
+                    <button type="submit">logout</button>
+                    
+                    </form>
+                </Togglable>
                
                 <p>
                 {blogs.map(blog => {
@@ -238,12 +243,7 @@ try {
      
                 </p>
                </div>
-                <Togglable buttonLabel='logout'>
-                    <form onSubmit={handleLogout}>
-                    <button type="submit">logout</button>
-                    
-                    </form>
-                </Togglable>
+               
             </>
         )
         }
