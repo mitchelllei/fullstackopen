@@ -48,7 +48,13 @@ const App = () => {
     }
   }, [])
 
-
+  useEffect(() => {
+    if(errorMessage){
+      setTimeout(() => {
+        setErrorMessage(null)
+      },5000)
+    }
+  },[errorMessage])
   const handleLogin = async (event) => {
     event.preventDefault()
   
@@ -61,17 +67,20 @@ const App = () => {
         'loggedBlogAppUser', JSON.stringify(user)
       ) 
       setErrorMessage("Logged in Succesfully")
+      console.log("Logged in Succesfully")
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
       console.log("Error Logging In")
       setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
+      
   }
+}
+ 
+
+
+
 
   const handleLogout = async (event) => {
     event.preventDefault()
@@ -81,12 +90,10 @@ const App = () => {
       setErrorMessage("Logged out Succesfully")
     } catch (exception){
       setErrorMessage("error logging out")
-      setTimeout(()=> {
-        setErrorMessage(null)
-      },5000)
-    }
+     
     
   }
+}
 
 
 // const loginForm = () => (
@@ -180,90 +187,69 @@ try {
   }
    
    }
-    
-      
-  
- 
-  if (user === null) {
-    return (
-      <React.Fragment>
-        <h2>Log in to application</h2>
-        <Notification message={errorMessage} />
-        
-        <Togglable buttonLabel='login'>
-          <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
-          />
-        </Togglable> :
-        <div>
-          <p>{user} logged in</p>
-          <Togglable buttonLabel='add blog'>
-        <ToggleBlog
-    handleSubmit= {makeBlogObject}
-    handleTitleChange = {({ target }) =>setTitle(target.value)}
-    handleUrlChange = {({ target }) =>setUrl(target.value)}
-    handleAuthorChange = {({ target }) =>setAuthor(target.value)}
-    handleLikesChange = {({ target }) =>setLikes(target.value)}
-    title = {title}
-    url = {url}
-    author = {author}
-    likes = {likes} />
-    </Togglable>
-          
-        </div>
-        </React.Fragment>
-    )
-  }
-
-  return (
+   return (
     <React.Fragment>
-    
-      <h2>blogs</h2>
-      console.log("IN THIS SECTION")
-      
-      <div>
-      <Notification message={errorMessage} />
-      </div>
-      <div>
-     
-      </div>
-  
-      <div>
-      {blogs.map(blog => {
-  console.log("BLOG ISqqq",blog)
-   return <Blog key={blog.id} blog={blog} /> 
-}
-   )}
-      </div>
-     
-    
-  
+        <div>
 
-      <Togglable buttonLabel='logout'>
-      <form onSubmit={handleLogout}>
-      <button type="submit">logout</button>
-      
-      </form>
-      </Togglable>
+        </div>
+        {
+        user === null ?
+        (
+            <>
+                <div>
+                    <h2>Log in to application</h2>
+                    <Notification message={errorMessage} />
+                </div>
+                <Togglable buttonLabel='login'>
+                    <LoginForm
+                        username={username}
+                        password={password}
+                        handleUsernameChange={({ target }) => setUsername(target.value)}
+                        handlePasswordChange={({ target }) => setPassword(target.value)}
+                        handleLogin={handleLogin} />
+                </Togglable>
+            </>
+        )
+        :(
+            <>
+            {console.log("USER IS ", user)}
+                <p>{user.username} logged in</p>
+                <Togglable buttonLabel='add blog'>
+                    <ToggleBlog
+                    handleSubmit= {makeBlogObject}
+                    handleTitleChange = {({ target }) =>setTitle(target.value)}
+                    handleUrlChange = {({ target }) =>setUrl(target.value)}
+                    handleAuthorChange = {({ target }) =>setAuthor(target.value)}
+                    handleLikesChange = {({ target }) =>setLikes(target.value)}
+                    title = {title}
+                    url = {url}
+                    author = {author}
+                    likes = {likes} />
+                </Togglable>
+                <div>
+
+               
+                <p>
+                {blogs.map(blog => {
+       console.log("BLOG ISqqq",blog)
+     return <Blog key={blog.id} blog={blog}/>
+})}
+)
      
+                </p>
+               </div>
+                <Togglable buttonLabel='logout'>
+                    <form onSubmit={handleLogout}>
+                    <button type="submit">logout</button>
+                    
+                    </form>
+                </Togglable>
+            </>
+        )
+        }
     </React.Fragment>
-    
-    
-   
-    
-  )
+
+)
 }
 
 export default App
-
-
-
-
-{/* <h1 style={{ fontSize: "5rem" }}>{errorMessage}</h1>   */}
-{/* <Togglable buttonLabel="new note">
-            <NoteForm createNote={addNote} />
-          </Togglable> */}
