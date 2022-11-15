@@ -23,14 +23,18 @@ return(
   <React.Fragment>
 
 
-  <div style={blogStyle}>
-  <div>
-    <p>{blog.title} - {blog.author} <button onClick={changeShowBlog}>{buttonName}</button></p>
-  </div>
-  <div style={showWDetails }>
-    <p>{blog.url}</p>
-    <p>{ blog.likes } <button id='like' onClick={console.log("like")}>like</button></p>
-  </div>
+  
+    {blog.title} - {blog.author}
+    
+    {blog.title} - {blog.author} 
+    <button onClick={changeShowBlog}>
+          {buttonName}
+    </button>
+
+
+    <div style={showWDetails}>
+    {blog.url}
+    { blog.likes } <button id='like' onClick={console.log("like")}>like</button>
 </div>
   </React.Fragment>
 )
