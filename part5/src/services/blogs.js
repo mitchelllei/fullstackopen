@@ -1,6 +1,6 @@
 import axios from 'axios'
 const baseUrl = '/api/blogs'
-
+const backendUrl = 'http://localhost:3003/api/blogs'
 let token = null
 
 const setToken = newToken => {
@@ -38,7 +38,9 @@ const create = async newObject => {
 }
 
 const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
+  console.log("ID IS ",id.id)
+  console.log("newObject is ", newObject)
+  const request = axios.put(`${backendUrl}/${id}`, newObject)
   return request.then(response => response.data)
 }
 // eslint-disable-next-line
