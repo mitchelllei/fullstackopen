@@ -2,7 +2,7 @@ import React , { useState } from 'react'
 
 const Blog = ({blog}) => {
   const [showBlogDetails, setShowBlogDetails] = useState(false)
-  const showWDetails = { show: showBlogDetails ? '' : 'none' }
+  const showWDetails = {display: showBlogDetails ? '' : 'none' }
   
   const blogStyle = {
     paddingTop: 10,
@@ -21,20 +21,17 @@ const Blog = ({blog}) => {
   
 return(
   <React.Fragment>
+   <div style={blogStyle} className='blog'>
 
-
-  
-    {blog.title} - {blog.author}
-    
-    {blog.title} - {blog.author} 
-    <button onClick={changeShowBlog}>
-          {buttonName}
-    </button>
+<div>
+        <p>{blog.title} - {blog.author} <button onClick={changeShowBlog}>{buttonName }</button></p>
+      </div>
 
 
     <div style={showWDetails}>
     {blog.url}
     { blog.likes } <button id='like' onClick={console.log("like")}>like</button>
+</div>
 </div>
   </React.Fragment>
 )
