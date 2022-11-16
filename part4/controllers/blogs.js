@@ -67,16 +67,18 @@ router.put('/:id', async (request, response, next) => {
   //     blog, 
   //     { new: true, runValidators: true, context: 'query' }
   //   )
-
+    // await Blog.deleteMany({})
     const blogToUpdate = await Blog.findById(request.params.id)
+    
     console.log("blogtoupdate",blogToUpdate)
-    updateLikes = blog.likes+1
+  
+  
     if ( blogToUpdate.user._id.toString() === request.user._id.toString() ) {
         const newBlog = {
             title: blog.title,
             author: blog.author,
             url: blog.url,
-            likes: updateLikes,
+            likes: blog.likes,
             user: blog.user
             
         }
@@ -87,7 +89,7 @@ router.put('/:id', async (request, response, next) => {
           console.log("User match")
             updatedBlog = await Blog.findByIdAndUpdate(
             {_id: request.params.id},
-             {likes: updateLikes},
+             {likes: blog.likes},
               { new: true })
             logger.info(`blog ${blog.title} successfully updated`)
             //console.log("updatedBlog",updatedBlog)
@@ -96,7 +98,9 @@ router.put('/:id', async (request, response, next) => {
             next(exception)
         }
     } else {
-        return response.status(401).json({ error: `Unauthorized` })
+        return
+         response.status(401).json({ error: `Unauthorized aaaa` })
+        
     }
       
   response.json(updatedBlog)
