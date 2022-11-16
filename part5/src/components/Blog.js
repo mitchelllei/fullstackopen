@@ -6,6 +6,7 @@ const Blog = ({blog}) => {
   const showWDetails = {display: showBlogDetails ? '' : 'none' }
   const [blogObject, setBlogObject] = useState(blog)
   const [likeButtonClicked,setLikeButtonClicked] = useState(0)
+  const [deleteButtonClicked, setDeleteButtonClicked] = useState(0)
   
   const blogStyle = {
     paddingTop: 10,
@@ -26,20 +27,27 @@ const Blog = ({blog}) => {
     setLikeButtonClicked(likeButtonClicked + 1);
   }
 
+  const incrementDeleteButton = () => {
+    
+    setDeleteButtonClicked(deleteButtonClicked + 1);
+    {console.log("delete counter should increment")}
+  }
+
+
   const addLike = async () => {
    
     blogService.
     blogLike(blog)
    {console.log("liked added")}
-   setBlogObject(blog)
+  
 
     }
     const deleteBlogEntry = async () => {
-      
-      
+      window.confirm(`do you want to delete ${blog.title}`)
+
       blogService
-        .deleteBlog(blog.id)
-   
+        .deleteBlog(blog)
+        {console.log("blog deleted clicked")}
 }
 
     
@@ -64,7 +72,13 @@ return(
       incrementLikeButton()
       }}
       >like</button>
-     <button id='delete' onClick={deleteBlogEntry}>delete</button>
+
+     <button id='delete' onClick={() => {
+      deleteBlogEntry();
+      incrementDeleteButton()
+     }}
+     >delete</button>
+
 </div>
 </div>
   </React.Fragment>

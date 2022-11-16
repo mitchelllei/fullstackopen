@@ -64,15 +64,16 @@ const blogLike = async (blogObject) => {
   console.log("User not defined")
 }
 
-const deleteBlog = async id => {
+const deleteBlog = async (blogObject) => {
   const config = {
     headers: { Authorization: token },
   }
-
-  
+  if(blogObject.user.id !== undefined){
+  console.log("Blog object id is ",blogObject.id)
+  const response = await axios.delete(`${baseUrl}/${blogObject.id}`, config)
   return response.data
-  const response = await axios.delete(`${baseUrl}/${id}`, config)
-  return response.data
+  }
+  console.log("User not defined")
 }
 // eslint-disable-next-line
 export default { getAll, create, update, setToken, blogLike, deleteBlog }
