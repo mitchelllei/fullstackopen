@@ -187,6 +187,11 @@ try {
   }
    
    }
+
+   const filtered = blogs.filter(blog => {
+    return blog.user?.id !== undefined})
+
+
    return (
     <React.Fragment>
         <div>
@@ -212,7 +217,7 @@ try {
         )
         :(
             <>
-            {console.log("USER IS ", user)}
+   
                 <p>{user.username} logged in</p>
                 <Togglable buttonLabel='add blog'>
                     <ToggleBlog
@@ -235,8 +240,12 @@ try {
                 </Togglable>
                
                 <p>
-                {blogs.map(blog => {
-       console.log("BLOG ISqqq",blog)
+                
+
+               
+                {filtered.map(blog => {
+                  console.log("BLOG? ",blog.user?.id)
+                  console.log("Blog ID", blog.id)
      return <Blog key={blog.id} blog={blog}/>
 })}
 )

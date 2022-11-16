@@ -5,6 +5,7 @@ const Blog = ({blog}) => {
   const [showBlogDetails, setShowBlogDetails] = useState(false)
   const showWDetails = {display: showBlogDetails ? '' : 'none' }
   const [blogObject, setBlogObject] = useState(blog)
+  const [likeButtonClicked,setLikeButtonClicked] = useState(0)
   
   const blogStyle = {
     paddingTop: 10,
@@ -20,15 +21,29 @@ const Blog = ({blog}) => {
     setShowBlogDetails(!showBlogDetails)
   }
 
-  const addLike = () => {
-    const addLikeBlog = ({
-      ...blog,
-      likes: blog.likes + 1
-    })
-    blogService.update(addLikeBlog)
-    setBlogObject(addLikeBlog)
-    console.log("like added")
+  const incrementLikeButton = () => {
+    
+    setLikeButtonClicked(likeButtonClicked + 1);
   }
+
+  const addLike = async () => {
+   
+    blogService.
+    blogLike(blog)
+   {console.log("liked added")}
+   setBlogObject(blog)
+
+    }
+    const deleteBlogEntry = async () => {
+      
+      
+      blogService
+        .deleteBlog(blog.id)
+   
+}
+
+    
+  
 
 return(
   <React.Fragment>
@@ -44,7 +59,12 @@ return(
     <div style={showWDetails}>
     {blog.url}
     { blog.likes }
-     <button id='like' onClick={addLike}>like</button>
+     <button id='like' onClick={() => {
+      addLike();
+      incrementLikeButton()
+      }}
+      >like</button>
+     <button id='delete' onClick={deleteBlogEntry}>delete</button>
 </div>
 </div>
   </React.Fragment>
