@@ -25,6 +25,8 @@ const Togglable =  React.forwardRef((props, ref) => {
   )
 })
 
+Togglable.displayName = 'Togglable'
+
 Togglable.propTypes = {
   buttonLabel: PropTypes.string.isRequired
 }

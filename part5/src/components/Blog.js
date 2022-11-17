@@ -1,13 +1,13 @@
 import React , { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({blog}) => {
+const Blog = ({ blog }) => {
   const [showBlogDetails, setShowBlogDetails] = useState(false)
-  const showWDetails = {display: showBlogDetails ? '' : 'none' }
+  const showWDetails = { display: showBlogDetails ? '' : 'none' }
   const [blogObject, setBlogObject] = useState(blog)
   const [likeButtonClicked,setLikeButtonClicked] = useState(0)
   const [deleteButtonClicked, setDeleteButtonClicked] = useState(0)
-  
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -23,68 +23,68 @@ const Blog = ({blog}) => {
   }
 
   const incrementLikeButton = () => {
-    
-    setLikeButtonClicked(likeButtonClicked + 1);
+
+    setLikeButtonClicked(likeButtonClicked + 1)
   }
 
   const incrementDeleteButton = () => {
-    
-    setDeleteButtonClicked(deleteButtonClicked + 1);
-    {console.log("delete counter should increment")}
+
+    setDeleteButtonClicked(deleteButtonClicked + 1)
+    {console.log('delete counter should increment')}
   }
 
 
   const addLike = async () => {
-   
-    blogService.
-    blogLike(blog)
-   {console.log("liked added")}
-  
 
-    }
-    const deleteBlogEntry = async () => {
-      window.confirm(`do you want to delete ${blog.title}`)
+    blogService
+      .blogLike(blog)
+    {console.log('liked added')}
 
-      blogService
-        .deleteBlog(blog)
-        {console.log("blog deleted clicked")}
-}
 
-    
-  
+  }
+  const deleteBlogEntry = async () => {
+    window.confirm(`do you want to delete ${blog.title}`)
 
-return(
-  <React.Fragment>
-   <div style={blogStyle} className='blog'>
+    blogService
+      .deleteBlog(blog)
+    {console.log('blog deleted clicked')}
+  }
 
-<div>
-        <p>{blog.title} - {blog.author} </p>
-      </div>
-      <button onClick={changeShowBlog}>
+
+
+
+  return(
+    <React.Fragment>
+      <div style={blogStyle} className='blog'>
+
+        <div>
+          <p>{blog.title} - {blog.author} </p>
+        </div>
+        <button onClick={changeShowBlog}>
           {buttonName}
-          </button>
-          
-    <div style={showWDetails}>
-    {blog.url}
-    { blog.likes }
-     <button id='like' onClick={() => {
-      addLike();
-      incrementLikeButton()
-      }}
-      >like</button>
+        </button>
 
-     <button id='delete' onClick={() => {
-      deleteBlogEntry();
-      incrementDeleteButton()
-     }}
-     >delete</button>
+        <div style={showWDetails}>
+          {blog.url}
+          { blog.likes }
+          <button id='like' onClick={() => {
+            addLike()
+            incrementLikeButton()
+          }}
+          >like</button>
 
-</div>
-</div>
-  </React.Fragment>
-)
+          <button id='delete' onClick={() => {
+            deleteBlogEntry()
+            incrementDeleteButton()
+          }}
+          >delete</button>
+
+        </div>
+      </div>
+    </React.Fragment>
+  )
 }
 
-  
+
 
 export default Blog

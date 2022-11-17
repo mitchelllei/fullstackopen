@@ -16,32 +16,32 @@ const getAll = () => {
 }
 
 const create = async newObject => {
-  console.log("Object in Blog Service ",newObject)
+  console.log('Object in Blog Service ',newObject)
   Object.assign(
-    {}, 
-    ...function _flatten(o) { 
+    {},
+    ...function _flatten(o) {
       return [].concat(...Object.keys(o)
-        .map(k => 
+        .map(k =>
           typeof o[k] === 'object' ?
-            _flatten(o[k]) : 
-            ({[k]: o[k]})
+            _flatten(o[k]) :
+            ({ [k]: o[k] })
         )
-      );
+      )
     }(newObject)
   )
   const config = {
     headers: { Authorization: token },
   }
-  console.log("config is ",config)
-  console.log("Token is ",token)
+  console.log('config is ',config)
+  console.log('Token is ',token)
   const response = await axios.post(baseUrl, newObject, config)
-  
+
   return response.data
 }
 
 const update = (id, newObject) => {
-  console.log("ID IS ",id)
-  console.log("newObject is ", newObject)
+  console.log('ID IS ',id)
+  console.log('newObject is ', newObject)
   const request = axios.put(`${backendUrl}/${id.id}`, id)
   return request.then(response => response.data)
 }
@@ -50,18 +50,18 @@ const blogLike = async (blogObject) => {
   const config = {
     headers: { Authorization: token },
   }
-  console.log("blog object is ",)
+  console.log('blog object is ',)
   if(blogObject.user.id !== undefined){
-  console.log("blog object is ",blogObject)
-  const likeBlog = blogObject
-  likeBlog.likes = blogObject.likes+1
-  console.log(`${backendUrl}/${blogObject.id}`)
-  const response =  axios.put(`${backendUrl}/${blogObject.id}`, likeBlog, config)
+    console.log('blog object is ',blogObject)
+    const likeBlog = blogObject
+    likeBlog.likes = blogObject.likes+1
+    console.log(`${backendUrl}/${blogObject.id}`)
+    const response =  axios.put(`${backendUrl}/${blogObject.id}`, likeBlog, config)
 
-  return response.data
+    return response.data
   //return axios.put(`${backendUrl}/${blogObject.id}`, likeBlog)
   }
-  console.log("User not defined")
+  console.log('User not defined')
 }
 
 const deleteBlog = async (blogObject) => {
@@ -69,11 +69,11 @@ const deleteBlog = async (blogObject) => {
     headers: { Authorization: token },
   }
   if(blogObject.user.id !== undefined){
-  console.log("Blog object id is ",blogObject.id)
-  const response = await axios.delete(`${baseUrl}/${blogObject.id}`, config)
-  return response.data
+    console.log('Blog object id is ',blogObject.id)
+    const response = await axios.delete(`${baseUrl}/${blogObject.id}`, config)
+    return response.data
   }
-  console.log("User not defined")
+  console.log('User not defined')
 }
 // eslint-disable-next-line
 export default { getAll, create, update, setToken, blogLike, deleteBlog }
