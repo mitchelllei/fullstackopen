@@ -240,18 +240,18 @@ const App = () => {
                   </form>
                 </Togglable>
 
-                <p>
 
 
 
-                  {filtered.map(blog => {
-                    console.log('BLOG? ',blog.user?.id)
-                    console.log('Blog ID', blog.id)
-                    return <Blog key={blog.id} blog={blog}/>
-                  })}
+
+                {filtered.map(blog => {
+                  console.log('BLOG? ',blog.user?.id)
+                  console.log('Blog ID', blog.id)
+                  return <Blog key={blog.id} blog={blog}/>
+                })}
 )
 
-                </p>
+
               </div>
 
             </>
