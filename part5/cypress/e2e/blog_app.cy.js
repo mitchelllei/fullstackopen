@@ -11,6 +11,6 @@ describe('Note app', function() {
  })
  
  it('Login form is shown', function() {
-  cy.contains('login_button').click()
+  cy.get(`#login__button`).click()
 })
 })
