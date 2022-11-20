@@ -1,7 +1,16 @@
-describe('Blog app', function() {
-  it('front page can be opened', function() {
-    cy.visit('http://localhost:3000')
-    cy.contains('Notes')
-    cy.contains('Note app, Department of Computer Science, University of Helsinki 2022')
-  })
+describe('Note app', function() {
+  beforeEach(function() {
+   cy.request('POST', 'http://localhost:3001/api/testing/reset')
+   const user = {
+     name: 'Matti Luukkainen',
+     username: 'mluukkai',
+     password: 'salainen'
+   }
+   cy.request('POST', 'http://localhost:3001/api/users/', user) 
+   cy.visit('http://localhost:3000')
+ })
+ 
+ it('Login form is shown', function() {
+  cy.contains('login_button').click()
+})
 })
