@@ -60,5 +60,18 @@ describe('Check add blog', function() {
   cy.get('#likes').type('5')
   cy.contains('add blog').click({ force: true }) 
 })
+it("like blog", function() {
+  
+  cy.get(`#login_buton1`).click()
+  cy.get('#username').type('mluukkai')
+  cy.get('#password').type('salainen')
+  cy.get(`#login_button`).click()
+  cy.get('#title').type('mlu')
+  cy.get('#author').type('sa')
+  cy.get('#url').type('asf')
+  cy.get('#likes').type('5')
+  cy.contains('add blog').click({ force: true }) 
+  cy.contains('add blog').click({ force: true }) 
+})
 
 })

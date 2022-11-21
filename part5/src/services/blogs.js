@@ -34,7 +34,7 @@ const create = async newObject => {
   }
   console.log('config is ',config)
   console.log('Token is ',token)
-  const response = await axios.post(baseUrl, newObject, config)
+  const response = await axios.post(backendUrl, newObject, config)
 
   return response.data
 }
