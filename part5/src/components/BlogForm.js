@@ -1,4 +1,4 @@
-const BlogForm = ({ onSubmit, handleChange, value }) => {
+const BlogForm = ({ onSubmit, handleChange, value}) => {
   return (
     <div>
       <h2>Create a new blog</h2>

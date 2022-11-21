@@ -17,6 +17,7 @@ const ToggleBlog = ({
       <div>
         title
         <input
+          id = "title"
           type = "text"
           value = {title}
           name = "title"
@@ -26,6 +27,7 @@ const ToggleBlog = ({
       <div>
       url
         <input
+          id = "url"
           type = "text"
           value ={url}
           name="url"
@@ -36,6 +38,7 @@ const ToggleBlog = ({
 
       author
         <input
+          id = "author"
           type = "text"
           value ={author}
           name="author"
@@ -46,6 +49,7 @@ const ToggleBlog = ({
       <div>
       likes
         <input
+          id = "likes"
           type = "text"
           value ={likes}
           name="likes"
