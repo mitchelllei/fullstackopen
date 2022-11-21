@@ -220,7 +220,7 @@ const App = () => {
             <>
 
               <p>{user.username} logged in</p>
-              <Togglable buttonLabel='add blog'>
+              <Togglable  buttonLabel='add blog'>
                 <ToggleBlog
                   handleSubmit= {makeBlogObject}
                   handleTitleChange = {({ target }) => setTitle(target.value)}
@@ -235,7 +235,7 @@ const App = () => {
               <div>
                 <Togglable buttonLabel='logout'>
                   <form onSubmit={handleLogout}>
-                    <button type="submit">logout</button>
+                    <button id = 'logout_button' type="submit">logout</button>
 
                   </form>
                 </Togglable>
