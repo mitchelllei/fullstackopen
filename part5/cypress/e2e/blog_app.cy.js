@@ -8,7 +8,7 @@ describe('Check login form log in out app', function() {
    }
    cy.request('POST', 'http://localhost:3003/api/users/', user) 
    cy.visit('http://localhost:3000')
- })
+ }) 
  
  it('Login form is shown', function() {
   cy.get(`#login_buton1`).click()
@@ -33,7 +33,7 @@ it("tests logout", function() {
 
 })
 
-})
+}) 
 
 describe('Check add blog', function() {
   beforeEach(function() {
