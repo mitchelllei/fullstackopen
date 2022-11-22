@@ -38,6 +38,7 @@ router.post('/', async (request, response) => {
   const savedUser = await user.save()
 
   response.status(201).json(savedUser)
+  console.log("USER MADE")
 })
 
 module.exports = router

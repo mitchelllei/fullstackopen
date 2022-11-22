@@ -30,6 +30,7 @@ const App = () => {
   const [likes, setLikes] = useState('')
 
   const [loginVisible, setLoginVisible] = useState(false)
+  const [updateBlogs, setUpdateBlogs] = useState(0)
 
 
 
@@ -182,6 +183,7 @@ const App = () => {
       console.log('Added',madeBlog)
       console.log('All blogs is ', blogs)
       setErrorMessage('Blog added succesfully')
+      setUpdateBlogs+=updateBlogs
     } catch (e) {
       console.log('Error')
       setErrorMessage('Failed to add new blog')
